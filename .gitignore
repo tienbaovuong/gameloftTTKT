@@ -31,3 +31,5 @@
 *.out
 *.app
 *.log
+freetype/objs/vc2019/Win32/Debug/freetype.Build.CppClean.log
+TrainingFramework/Debug-Nvidia/TrainingFramework.Build.CppClean.log

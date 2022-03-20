@@ -1,7 +1,7 @@
 #include "GSMenu.h"
 #include "Camera.h"
 GSMenu::GSMenu() : GameStateBase(StateType::STATE_MENU), 
-	m_background(nullptr), m_listButton(std::list<std::shared_ptr<GameButton>>{}), m_textGameName(nullptr)
+	m_background(nullptr), m_listButton(std::list<std::shared_ptr<GameButton>>{}), m_textGameName1(nullptr), m_textGameName2(nullptr)
 {
 }
 
@@ -15,7 +15,7 @@ GSMenu::~GSMenu()
 void GSMenu::Init()
 {
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play1.tga");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_menu1.tga");
 
 	// background
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
@@ -26,18 +26,36 @@ void GSMenu::Init()
 	// play button
 	texture = ResourceManagers::GetInstance()->GetTexture("btn_play.tga");
 	std::shared_ptr<GameButton> button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(Globals::screenWidth / 2, Globals::screenHeight / 2);
-	button->SetSize(200, 200);
+	button->Set2DPosition(Globals::screenWidth - 150, 250);
+	button->SetSize(200, 100);
 	button->SetOnClick([]() {
 			GameStateMachine::GetInstance()->ChangeState(StateType::STATE_PLAY);
 		});
 	m_listButton.push_back(button);
 
-	// exit button
-	texture = ResourceManagers::GetInstance()->GetTexture("btn_close.tga");
+	// resume button
+	texture = ResourceManagers::GetInstance()->GetTexture("btn_resume_disable.tga");
 	button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(Globals::screenWidth - 50, 50);
-	button->SetSize(50, 50);
+	button->Set2DPosition(Globals::screenWidth - 150, 350);
+	button->SetSize(200, 100);
+	button->SetOnClick([]() {
+		});
+	m_listButton.push_back(button);
+
+	// setting button
+	texture = ResourceManagers::GetInstance()->GetTexture("btn_setting.tga");
+	button = std::make_shared<GameButton>(model, shader, texture);
+	button->Set2DPosition(Globals::screenWidth - 150, 450);
+	button->SetSize(200, 100);
+	button->SetOnClick([]() {
+		});
+	m_listButton.push_back(button);
+
+	// exit button
+	texture = ResourceManagers::GetInstance()->GetTexture("btn_quit.tga");
+	button = std::make_shared<GameButton>(model, shader, texture);
+	button->Set2DPosition(Globals::screenWidth - 150, 550);
+	button->SetSize(200, 100);
 	button->SetOnClick([]() {
 		exit(0);
 		});
@@ -45,10 +63,15 @@ void GSMenu::Init()
 
 	// game title
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
-	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Brightly Crush Shine.otf");
-	m_textGameName = std::make_shared< Text>(shader, font, "GAME TITLE", Vector4(1.0f, 0.5f, 0.0f, 1.0f), 3.0f);
-	m_textGameName->Set2DPosition( Globals::screenWidth/2 - 200 , 100);
+	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Ramaraja-Regular.ttf");
 
+	m_textGameName1 = std::make_shared< Text>(shader, font, "Ice", Vector4(0, 0, 0, 1.0f), 5.0f);
+	m_textGameName1->Set2DPosition( 50, 350);
+
+	m_textGameName2 = std::make_shared< Text>(shader, font, "Emblem", Vector4(0, 0, 0, 1.0f), 5.0f);
+	m_textGameName2->Set2DPosition( 50 , 470);
+
+	//game sound
 	std::string name = "Alarm01.wav";
 	ResourceManagers::GetInstance()->PlaySound(name);
 }
@@ -107,5 +130,6 @@ void GSMenu::Draw()
 	{
 		it->Draw();
 	}
-	m_textGameName->Draw();
+	m_textGameName1->Draw();
+	m_textGameName2->Draw();
 }

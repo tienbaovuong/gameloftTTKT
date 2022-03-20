@@ -1,1 +1,6 @@
 Logo - water droplet: https://clubpenguinrewritten.fandom.com/wiki/Water_Droplet_Pin
+
+Button asset: https://pngtree.com/freepng/set-of-sci-fi-blue-game-buttons-and-ui-kit-for-games_6259705.html
+		https://pngtree.com/freepng/circle-metal-game-button_5255568.html
+background: 
+	menu: https://unsplash.com/s/photos/ice-mountain

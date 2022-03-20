@@ -51,6 +51,15 @@ GLint _tmain(GLint argc, _TCHAR* argv[])
 	esCreateWindow(&esContext, "Epic", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
 	if (Init(&esContext) != 0)
 		return 0;
+	
+	//center window
+	RECT rc;
+	GetWindowRect(esContext.hWnd, &rc);
+	int xPos = (GetSystemMetrics(SM_CXSCREEN) - rc.right) / 2;
+	int yPos = (GetSystemMetrics(SM_CYSCREEN) - rc.bottom) / 2;
+
+	SetWindowPos(esContext.hWnd, 0, xPos, yPos, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
+
 
 	esRegisterDrawFunc(&esContext, Draw);
 	esRegisterUpdateFunc(&esContext, Update);

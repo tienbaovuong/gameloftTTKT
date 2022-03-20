@@ -4,3 +4,4 @@ Button asset: https://pngtree.com/freepng/set-of-sci-fi-blue-game-buttons-and-ui
 		https://pngtree.com/freepng/circle-metal-game-button_5255568.html
 background: 
 	menu: https://unsplash.com/s/photos/ice-mountain
+	play: https://feuniverse.us/t/fe12-backgrounds-for-gba/4759

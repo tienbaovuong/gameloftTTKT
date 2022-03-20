@@ -12,7 +12,6 @@
 #include "SpriteAnimation.h"
 
 
-
 GSPlay::GSPlay()
 {
 }
@@ -26,8 +25,9 @@ GSPlay::~GSPlay()
 void GSPlay::Init()
 {
 	m_Test = 1;
+	m_isPause = false;
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play2.tga");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play1.tga");
 
 	// background
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
@@ -35,15 +35,39 @@ void GSPlay::Init()
 	m_background->Set2DPosition((float)Globals::screenWidth / 2, (float)Globals::screenHeight / 2);
 	m_background->SetSize(Globals::screenWidth, Globals::screenHeight);
 
-	// button close
-	texture = ResourceManagers::GetInstance()->GetTexture("btn_close.tga");
+	// button list
+	// button pause
+	texture = ResourceManagers::GetInstance()->GetTexture("btn_pause.tga");
 	std::shared_ptr<GameButton>  button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(Globals::screenWidth - 50, 50);
-	button->SetSize(50, 50);
+	button->Set2DPosition(Globals::screenWidth - 75, 50);
+	button->SetSize(75, 75);
 	button->SetOnClick([this]() {
-			GameStateMachine::GetInstance()->PopState();
+			//GameStateMachine::GetInstance()->PopState();
+			Pause();
 		});
 	m_listButton.push_back(button);
+
+	// button list in pause mode
+	// button continue
+	texture = ResourceManagers::GetInstance()->GetTexture("btn_resume.tga");
+	button = std::make_shared<GameButton>(model, shader, texture);
+	button->Set2DPosition(Globals::screenWidth/2, 350);
+	button->SetSize(200, 100);
+	button->SetOnClick([this]() {
+			Resume();
+			//GameStateMachine::GetInstance()->PopState();
+		});
+	m_listButtonOnPause.push_back(button);
+
+	// button return to main menu
+	texture = ResourceManagers::GetInstance()->GetTexture("btn_quit.tga");
+	button = std::make_shared<GameButton>(model, shader, texture);
+	button->Set2DPosition(Globals::screenWidth/2, 450);
+	button->SetSize(200, 100);
+	button->SetOnClick([this]() {
+		GameStateMachine::GetInstance()->PopState();
+		});
+	m_listButtonOnPause.push_back(button);
 
 	// score
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
@@ -51,6 +75,7 @@ void GSPlay::Init()
 	m_score = std::make_shared< Text>(shader, font, "score: 10", TextColor::RED, 1.0);
 	m_score->Set2DPosition(Vector2(5, 25));
 
+	//animation
 	shader = ResourceManagers::GetInstance()->GetShader("Animation");
 	texture = ResourceManagers::GetInstance()->GetTexture("Actor1_2.tga");
 	std::shared_ptr<SpriteAnimation> obj = std::make_shared<SpriteAnimation>(model, shader, texture, 9, 6, 5, 0.1f);
@@ -69,10 +94,15 @@ void GSPlay::Exit()
 
 void GSPlay::Pause()
 {
+	m_isPause = std::make_shared<BOOLEAN>(TRUE);
 }
 
 void GSPlay::Resume()
 {
+	if (m_isPause.get()) {
+		m_isPause = false;
+		std::wcout << "Yes";
+	}
 }
 
 
@@ -93,6 +123,14 @@ void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
 			break;
 		}
 	}
+
+	for (auto button : m_listButtonOnPause)
+	{
+		if (button->HandleTouchEvents(x, y, bIsPressed))
+		{
+			break;
+		}
+	}
 }
 
 void GSPlay::HandleMouseMoveEvents(int x, int y)
@@ -101,20 +139,29 @@ void GSPlay::HandleMouseMoveEvents(int x, int y)
 
 void GSPlay::Update(float deltaTime)
 {
+	for (auto it : m_listButtonOnPause)
+	{
+		it->Update(deltaTime);
+	}
+
+
+	if (m_isPause.get()) return;
 	for (auto it : m_listButton)
 	{
 		it->Update(deltaTime);
 	}
+
 	for (auto it : m_listAnimation)
 	{
 		it->Update(deltaTime);
 	}
+	
 }
 
 void GSPlay::Draw()
 {
 	m_background->Draw();
-	m_score->Draw();
+	//m_score->Draw();
 	for (auto it : m_listButton)
 	{
 		it->Draw();
@@ -124,4 +171,12 @@ void GSPlay::Draw()
 	{
 		it->Draw();
 	}
+
+	if (m_isPause.get()) {
+		for (auto it : m_listButtonOnPause)
+		{
+			it->Draw();
+		}
+	}
+
 }

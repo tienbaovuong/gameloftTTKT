@@ -75,7 +75,12 @@
     <ClCompile Include="src\GameObject\Character.cpp">
       <Filter>TrainingFramework\src\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="src\GameObject\Item.cpp">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\MapSquare.cpp">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -138,10 +143,15 @@
     <ClInclude Include="src\GameObject\SpriteAnimation.h">
       <Filter>TrainingFramework\src\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameObject\Item.h">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MapSquare.h">
+      <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClInclude>
     <ClInclude Include="src\GameObject\Character.h">
       <Filter>TrainingFramework\src\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

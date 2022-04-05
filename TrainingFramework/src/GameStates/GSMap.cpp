@@ -88,6 +88,15 @@ void GSMap::Init()
 	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Brightly Crush Shine.otf");
 	m_debug = std::make_shared<Text>(shader, font, "", TextColor::RED, 1.0);
 	m_debug->Set2DPosition(Vector2(5, 25));
+
+	//animation
+	shader = ResourceManagers::GetInstance()->GetShader("Animation");
+	texture = ResourceManagers::GetInstance()->GetTexture("Ike.tga");
+	std::shared_ptr<SpriteAnimation> obj = std::make_shared<SpriteAnimation>(model, shader, texture, 4, 4, 2, 0.25f);
+
+	obj->Set2DPosition(Globals::screenWidth / 2, Globals::screenHeight / 2);
+	obj->SetSize(Globals::squareLength * 2, Globals::squareLength * 2);
+	m_listAnimation.push_back(obj);
 }
 
 void GSMap::Exit()
@@ -118,6 +127,7 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 		switch (key)
 		{
 		case KEY_MOVE_LEFT:
+		case KEY_LEFT:
 			//pointer transition
 			if (m_mapPointer->getPosX() == 0) break;
 			m_mapPointer->setPosXY(m_mapPointer->getPosX() - 1, m_mapPointer->getPosY());
@@ -135,6 +145,7 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 
 			break;
 		case KEY_MOVE_BACKWORD:
+		case KEY_DOWN:
 			//pointer transition
 			if (m_mapPointer->getPosY() == 19) break;
 			m_mapPointer->setPosXY(m_mapPointer->getPosX(), m_mapPointer->getPosY()+1);
@@ -150,6 +161,7 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 			//m_mapPointer->Set2DPosition(m_mapMatrix[xtemp][ytemp]->GetPosition().x, m_mapMatrix[xtemp][ytemp]->GetPosition().y);
 			break;
 		case KEY_MOVE_RIGHT:
+		case KEY_RIGHT:
 			//pointer transition
 			if (m_mapPointer->getPosX() == 19) break;
 			m_mapPointer->setPosXY(m_mapPointer->getPosX() + 1, m_mapPointer->getPosY());
@@ -165,6 +177,7 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 			//m_mapPointer->Set2DPosition(m_mapMatrix[xtemp][ytemp]->GetPosition().x, m_mapMatrix[xtemp][ytemp]->GetPosition().y);
 			break;
 		case KEY_MOVE_FORWORD:
+		case KEY_UP:
 			//pointer transition
 			if (m_mapPointer->getPosY() == 0) break;
 			m_mapPointer->setPosXY(m_mapPointer->getPosX(), m_mapPointer->getPosY() - 1);
@@ -194,14 +207,15 @@ void GSMap::HandleTouchEvents(int x, int y, bool bIsPressed)
 			break;
 		}
 	}
-
-	for (auto button : m_listButtonOnPause)
-	{
-		if (button->HandleTouchEvents(x, y, bIsPressed))
+	if (m_isPause.get())
+		for (auto button : m_listButtonOnPause)
 		{
+			if (button->HandleTouchEvents(x, y, bIsPressed))
+			{
 			break;
+			}
 		}
-	}
+
 }
 
 void GSMap::HandleMouseMoveEvents(int x, int y)
@@ -210,11 +224,14 @@ void GSMap::HandleMouseMoveEvents(int x, int y)
 
 void GSMap::Update(float deltaTime)
 {
-	for (auto it : m_listButtonOnPause)
-	{
-		it->Update(deltaTime);
+	if (m_isPause.get()) {
+		for (auto it : m_listButtonOnPause)
+		{
+			it->Update(deltaTime);
+		}
+		return;
 	}
-	if (m_isPause.get()) return;
+	
 	for (auto it : m_listButton)
 	{
 		it->Update(deltaTime);
@@ -223,6 +240,11 @@ void GSMap::Update(float deltaTime)
 
 	int xtemp = m_mapPointer->getPosX(), ytemp = m_mapPointer->getPosY();
 	m_mapPointer->Set2DPosition(m_mapMatrix[xtemp][ytemp]->GetPosition().x, m_mapMatrix[xtemp][ytemp]->GetPosition().y);
+
+	for (auto it : m_listAnimation)
+	{
+		it->Update(deltaTime);
+	}
 }
 
 void GSMap::Draw()
@@ -233,6 +255,11 @@ void GSMap::Draw()
 		}
 	}
 	m_mapPointer->Draw();
+	
+	for (auto it : m_listAnimation)
+	{
+		it->Draw();
+	}
 	m_debug->Draw();
 	for (auto it : m_listButton)
 	{
@@ -245,4 +272,5 @@ void GSMap::Draw()
 			it->Draw();
 		}
 	}
+	
 }

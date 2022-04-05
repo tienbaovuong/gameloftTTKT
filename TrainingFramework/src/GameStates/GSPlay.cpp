@@ -121,14 +121,14 @@ void GSPlay::HandleTouchEvents(int x, int y, bool bIsPressed)
 			break;
 		}
 	}
-
-	for (auto button : m_listButtonOnPause)
-	{
-		if (button->HandleTouchEvents(x, y, bIsPressed))
+	if (m_isPause.get())
+		for (auto button : m_listButtonOnPause)
 		{
-			break;
+			if (button->HandleTouchEvents(x, y, bIsPressed))
+			{
+				break;
+			}
 		}
-	}
 }
 
 void GSPlay::HandleMouseMoveEvents(int x, int y)
@@ -137,13 +137,13 @@ void GSPlay::HandleMouseMoveEvents(int x, int y)
 
 void GSPlay::Update(float deltaTime)
 {
-	for (auto it : m_listButtonOnPause)
-	{
-		it->Update(deltaTime);
+	if (m_isPause.get()) {
+		for (auto it : m_listButtonOnPause)
+		{
+			it->Update(deltaTime);
+		}
+		return;
 	}
-
-
-	if (m_isPause.get()) return;
 	for (auto it : m_listButton)
 	{
 		it->Update(deltaTime);

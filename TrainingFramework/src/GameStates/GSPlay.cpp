@@ -24,7 +24,6 @@ GSPlay::~GSPlay()
 
 void GSPlay::Init()
 {
-	m_Test = 1;
 	m_isPause = false;
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
 	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play1.tga");
@@ -88,7 +87,6 @@ void GSPlay::Init()
 
 void GSPlay::Exit()
 {
-	printf("%d", m_Test);
 }
 
 
@@ -101,7 +99,7 @@ void GSPlay::Resume()
 {
 	if (m_isPause.get()) {
 		m_isPause = false;
-		std::wcout << "Yes";
+		//std::wcout << "Yes";
 	}
 }
 

@@ -29,7 +29,8 @@ void GSMenu::Init()
 	button->Set2DPosition(Globals::screenWidth - 150, 250);
 	button->SetSize(200, 100);
 	button->SetOnClick([]() {
-			GameStateMachine::GetInstance()->ChangeState(StateType::STATE_PLAY);
+			//GameStateMachine::GetInstance()->ChangeState(StateType::STATE_PLAY);
+			GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MAP);
 		});
 	m_listButton.push_back(button);
 

@@ -52,7 +52,7 @@ void GSMap::Init()
 	// button pause
 	texture = ResourceManagers::GetInstance()->GetTexture("btn_pause.tga");
 	std::shared_ptr<GameButton>  button = std::make_shared<GameButton>(model, shader, texture);
-	button->Set2DPosition(Globals::screenWidth - 75, 50);
+	button->Set2DPosition(Globals::screenWidth - 45, 50);
 	button->SetSize(75, 75);
 	button->SetOnClick([this]() {
 		//GameStateMachine::GetInstance()->PopState();

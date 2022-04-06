@@ -14,6 +14,7 @@ public:
 	GLint getEvasion();
 	char* getMapType();
 	std::shared_ptr<Character> getCharacter();
+	void setCharacter(std::shared_ptr<Character> character);
 
 	void setPosXY(GLint x, GLint y);
 	void setDrawPos(GLint x, GLint y);

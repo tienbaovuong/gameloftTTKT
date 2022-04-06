@@ -11,6 +11,7 @@
 #include "GameButton.h"
 #include "MapSquare.h"
 #include "MapPointer.h"
+#include "Character.h"
 #include "SpriteAnimation.h"
 
 GSMap::GSMap()
@@ -26,7 +27,14 @@ void GSMap::Init()
 	m_isPause = false;
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
-	
+	//animation
+	auto shaderAnimation = ResourceManagers::GetInstance()->GetShader("Animation");
+	auto textureAnimation = ResourceManagers::GetInstance()->GetTexture("Ike.tga");
+	std::shared_ptr<SpriteAnimation> obj = std::make_shared<SpriteAnimation>(model, shaderAnimation, textureAnimation, 4, 4, 2, 0.25f);
+
+	obj->SetSize(Globals::squareLength * 2, Globals::squareLength * 2);
+
+
 	//map matrix
 	auto texture = ResourceManagers::GetInstance()->GetTexture("tileset/Field_Snow1.tga");
 	auto texture2 = ResourceManagers::GetInstance()->GetTexture("tileset/River.tga");
@@ -82,6 +90,15 @@ void GSMap::Init()
 		});
 	m_listButtonOnPause.push_back(button);
 
+	//character
+	texture = ResourceManagers::GetInstance()->GetTexture("btn_quit.tga");
+	auto character = std::make_shared<Character>(model, shader, texture);
+	character->setPosXY(5, 5);
+	int x = 5, y = 5;
+	m_mapMatrix[x][y]->setCharacter(character);
+	character->setFieldAnimation(obj);
+	obj->Set2DPosition(m_mapMatrix[x][y]->GetPosition().x, m_mapMatrix[x][y]->GetPosition().y);
+	m_listCharacter.push_back(character);
 
 	//debug
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
@@ -89,14 +106,9 @@ void GSMap::Init()
 	m_debug = std::make_shared<Text>(shader, font, "", TextColor::RED, 1.0);
 	m_debug->Set2DPosition(Vector2(5, 25));
 
-	//animation
-	shader = ResourceManagers::GetInstance()->GetShader("Animation");
-	texture = ResourceManagers::GetInstance()->GetTexture("Ike.tga");
-	std::shared_ptr<SpriteAnimation> obj = std::make_shared<SpriteAnimation>(model, shader, texture, 4, 4, 2, 0.25f);
-
-	obj->Set2DPosition(Globals::screenWidth / 2, Globals::screenHeight / 2);
-	obj->SetSize(Globals::squareLength * 2, Globals::squareLength * 2);
-	m_listAnimation.push_back(obj);
+	//Evasion info
+	m_infoTile = std::make_shared<Text>(shader, font, "", TextColor::RED, 1.0);
+	m_infoTile->Set2DPosition(Vector2(10, Globals::screenHeight - 10));
 }
 
 void GSMap::Exit()
@@ -123,7 +135,7 @@ void GSMap::HandleEvents()
 void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 {
 	if (bIsPressed) {
-		//int xtemp = m_mapPointer->getPosX(), ytemp = m_mapPointer->getPosY();
+		int xtemp = m_mapPointer->getPosX(), ytemp = m_mapPointer->getPosY();
 		switch (key)
 		{
 		case KEY_MOVE_LEFT:
@@ -192,6 +204,33 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 				}
 			//m_mapPointer->Set2DPosition(m_mapMatrix[xtemp][ytemp]->GetPosition().x, m_mapMatrix[xtemp][ytemp]->GetPosition().y);
 			break;
+
+		case KEY_ENTER:
+			switch (currentState)
+			{
+			case 0:
+				if (m_mapMatrix[xtemp][ytemp]->getCharacter() == nullptr) {
+					break;
+				}
+				else {
+					auto temp = m_mapMatrix[xtemp][ytemp]->getCharacter();
+
+				}
+				currentState = 1;
+				break;
+
+			case 1:
+				currentState = 2;
+				break;
+
+			case 2:
+				m_mapMatrix[xtemp][ytemp]->getCharacter()->setFinishTurn(true);
+				if (checkEndTurn()) currentState = 3;
+				else currentState = 0;
+				break;
+			}
+
+			
 		default:
 			break;
 		}
@@ -222,6 +261,7 @@ void GSMap::HandleMouseMoveEvents(int x, int y)
 {
 }
 
+
 void GSMap::Update(float deltaTime)
 {
 	if (m_isPause.get()) {
@@ -236,14 +276,25 @@ void GSMap::Update(float deltaTime)
 	{
 		it->Update(deltaTime);
 	}
-	m_debug->SetText(std::to_string(m_mapPointer->getPosX()) + " - " + std::to_string(m_mapPointer->getPosY()));
-
 	int xtemp = m_mapPointer->getPosX(), ytemp = m_mapPointer->getPosY();
 	m_mapPointer->Set2DPosition(m_mapMatrix[xtemp][ytemp]->GetPosition().x, m_mapMatrix[xtemp][ytemp]->GetPosition().y);
+
+	//text
+	m_debug->SetText(std::to_string(xtemp) + " - " + std::to_string(ytemp));
+	m_infoTile->SetText("Evasion: " + std::to_string(m_mapMatrix[xtemp][ytemp]->getEvasion()));
+
 
 	for (auto it : m_listAnimation)
 	{
 		it->Update(deltaTime);
+		
+	}
+
+	for (auto it : m_listCharacter)
+	{
+		xtemp = it->getPosX(); ytemp = it->getPosY();
+		it->getFieldAnimation()->Set2DPosition(m_mapMatrix[xtemp][ytemp]->GetPosition().x, m_mapMatrix[xtemp][ytemp]->GetPosition().y);
+		it->getFieldAnimation()->Update(deltaTime);
 	}
 }
 
@@ -261,9 +312,14 @@ void GSMap::Draw()
 		it->Draw();
 	}
 	m_debug->Draw();
+	m_infoTile->Draw();
 	for (auto it : m_listButton)
 	{
 		it->Draw();
+	}
+	for (auto it : m_listCharacter)
+	{
+		it->getFieldAnimation()->Draw();
 	}
 
 	if (m_isPause.get()) {
@@ -274,3 +330,13 @@ void GSMap::Draw()
 	}
 	
 }
+
+bool GSMap::checkEndTurn()
+{
+	for (auto it : m_listCharacter) {
+		if (it->getFinishTurn() == false)
+			return false;
+	}
+	return true;
+}
+

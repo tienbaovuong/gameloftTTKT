@@ -24,6 +24,8 @@ public:
 	static int Globals::screenWidth;
 	static int Globals::screenHeight;
 	static int Globals::squareLength;
+	const static int Globals::mapWidth = 20;
+	const static int Globals::mapHeight = 20;
 };
 
 // define value
@@ -88,6 +90,7 @@ public:
 #ifdef WIN32
 
 #define KEY_BACK			VK_ESCAPE
+#define KEY_ENTER			VK_RETURN
 #define KEY_LEFT			VK_LEFT
 #define KEY_RIGHT			VK_RIGHT
 #define KEY_UP				VK_UP

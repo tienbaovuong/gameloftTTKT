@@ -34,6 +34,11 @@ std::shared_ptr<Character> MapSquare::getCharacter()
 	return this->character;
 }
 
+void MapSquare::setCharacter(std::shared_ptr<Character> character)
+{
+	this->character = character;
+}
+
 void MapSquare::setPosXY(GLint x, GLint y)
 {
 	this->m_posX = x;

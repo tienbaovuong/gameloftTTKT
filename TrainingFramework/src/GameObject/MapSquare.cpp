@@ -1,7 +1,7 @@
 #include "MapSquare.h"
 
 MapSquare::MapSquare(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture)
-	: Sprite2D(-1, model, shader, texture), m_posX(0), m_posY(0), m_evasion(0), m_maptype("unknown")
+	: Sprite2D(-1, model, shader, texture), m_posX(0), m_posY(0), m_evasion(0), m_maptype("unknown"), isPassable(true)
 {
 }
 
@@ -29,6 +29,11 @@ char* MapSquare::getMapType()
 	return this->m_maptype;
 }
 
+bool MapSquare::getPassable()
+{
+	return this->isPassable;
+}
+
 std::shared_ptr<Character> MapSquare::getCharacter()
 {
 	return this->character;
@@ -37,6 +42,11 @@ std::shared_ptr<Character> MapSquare::getCharacter()
 void MapSquare::setCharacter(std::shared_ptr<Character> character)
 {
 	this->character = character;
+}
+
+void MapSquare::setPassable(bool pass)
+{
+	this->isPassable = pass;
 }
 
 void MapSquare::setPosXY(GLint x, GLint y)

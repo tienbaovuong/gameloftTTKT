@@ -11,7 +11,7 @@ class Item;
 class MoveList
 {
 public:
-    MoveList() : x(0), y(0), move(0), preX(0), preY(0), mark(false) {}
+    MoveList() : x(0), y(0), move(0), preX(0), preY(0), mark(false), direction(4) {}
     MoveList(GLint x, GLint y, GLint move, GLint preX, GLint preY, bool mark);
     ~MoveList();
 

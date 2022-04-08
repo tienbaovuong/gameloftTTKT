@@ -3,6 +3,7 @@
 MapSquare::MapSquare(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture)
 	: Sprite2D(-1, model, shader, texture), m_posX(0), m_posY(0), m_evasion(0), m_maptype("unknown"), isPassable(true)
 {
+	this->SetSize(Globals::squareLength, Globals::squareLength);
 }
 
 MapSquare::~MapSquare()
@@ -24,7 +25,7 @@ GLint MapSquare::getEvasion()
 	return this->m_evasion;
 }
 
-char* MapSquare::getMapType()
+std::string MapSquare::getMapType()
 {
 	return this->m_maptype;
 }

@@ -16,6 +16,18 @@
     <Filter Include="TrainingFramework\src\GameStates">
       <UniqueIdentifier>{2a875364-1a2b-4ea6-a6fe-716988208916}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TrainingFramework\src\GameObject\MapTiles">
+      <UniqueIdentifier>{88c8f8f6-6e48-4c4e-a4a0-e19e7c03af0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TrainingFramework\src\GameObject\Characters">
+      <UniqueIdentifier>{97a08379-5b2b-4e55-9dec-8f3900b714ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TrainingFramework\src\GameObject\Items">
+      <UniqueIdentifier>{187424aa-a93e-41e2-b9db-542793f69377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TrainingFramework\src\GameObject\Level">
+      <UniqueIdentifier>{39520771-44dc-462e-a8e7-eca0b8f614ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -86,6 +98,18 @@
     </ClCompile>
     <ClCompile Include="src\GameObject\MapPointer.cpp">
       <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\MapTile\SnowField.cpp">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelBase.cpp">
+      <Filter>TrainingFramework\src\GameObject\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Level\LevelZero.cpp">
+      <Filter>TrainingFramework\src\GameObject\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\MapTile\River.cpp">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +187,21 @@
     </ClInclude>
     <ClInclude Include="src\GameObject\MapPointer.h">
       <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MapTile\SnowField.h">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Level\LevelBase.h">
+      <Filter>TrainingFramework\src\GameObject\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Level\LevelZero.h">
+      <Filter>TrainingFramework\src\GameObject\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MapTile\River.h">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MapTile\LevelHeader.h">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

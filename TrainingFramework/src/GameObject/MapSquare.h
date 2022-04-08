@@ -13,7 +13,7 @@ public:
 	GLint getPosX();
 	GLint getPosY();
 	GLint getEvasion();
-	char* getMapType();
+	std::string getMapType();
 	bool getPassable();
 	std::shared_ptr<Character> getCharacter();
 	void setCharacter(std::shared_ptr<Character> character);
@@ -26,7 +26,7 @@ protected:
 	GLint m_posX;
 	GLint m_posY;
 	GLint m_evasion;
-	char* m_maptype;
+	std::string m_maptype;
 	std::shared_ptr<Character> character;
 	bool isPassable;
 };

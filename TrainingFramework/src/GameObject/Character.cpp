@@ -60,7 +60,7 @@ void Character::move(GLint x, GLint y)
     while(x != m_posX || y != m_posY) {
         auto temp = m_movementMap[x][y];
         m_stackMove.push(temp);
-        printf("%d, %d\n", x, y);
+        //printf("%d, %d\n", x, y);
         x = temp.preX;
         y = temp.preY;
     }
@@ -182,7 +182,7 @@ MoveList** Character::getMovementMap()
 
 
 MoveList::MoveList(GLint x, GLint y, GLint move, GLint preX, GLint preY, bool mark)
-    : x(x), y(y), move(move), preX(preX), preY(preY), mark(mark)
+    : x(x), y(y), move(move), preX(preX), preY(preY), mark(mark), direction(4)
 {
 }
 

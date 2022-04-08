@@ -6,6 +6,7 @@
 int Globals::screenWidth = 770;
 int Globals::screenHeight = 770;
 int Globals::squareLength = 70;
+int Globals::gameLevel = 0;
 
 
 GLint Init(ESContext* esContext)

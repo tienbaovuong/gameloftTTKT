@@ -26,6 +26,9 @@ public:
 	static int Globals::squareLength;
 	const static int Globals::mapWidth = 20;
 	const static int Globals::mapHeight = 20;
+
+	//level
+	static int Globals::gameLevel;
 };
 
 // define value
@@ -42,6 +45,25 @@ public:
 #define NONE	111 
 #define RAW		222 
 #define NFG		333
+
+// define map tiles
+#define BRIDGE_VERTICAL		1
+#define BRIDGE_HORIZONTAL	2
+#define CAMP				3
+#define CASTLE				4
+#define CHESS				5
+#define OPENED_CHESS		6
+#define SNOW_FIELD			7
+#define GROUND				8
+#define RIVER				9
+#define FRONT_EDGE			10
+#define LEFT_EDGE			11
+#define LEFTCORNER_EDGE		12
+#define RIGHT_EDGE			13
+#define	RIGHTCORNER_EDGE	14
+#define SNOW_TREE			15
+#define NORMAL_TREE			16
+
 
 #ifdef WIN32
 

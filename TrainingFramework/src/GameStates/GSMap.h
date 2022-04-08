@@ -33,6 +33,7 @@ public:
 
 private:
 	std::shared_ptr<MapSquare>**	m_mapMatrix;
+	int m_map[Globals::mapWidth][Globals::mapHeight];
 	std::shared_ptr<BOOLEAN>    m_isPause;
 	std::list<std::shared_ptr<GameButton>>	m_listButton;
 	std::list<std::shared_ptr<GameButton>>	m_listButtonOnPause;

@@ -13,6 +13,8 @@
 #include "MapPointer.h"
 #include "Character.h"
 #include "SpriteAnimation.h"
+#include <Level/LevelZero.h>
+#include "MapTile/LevelHeader.h"
 
 GSMap::GSMap()
 	: currentState(0)
@@ -26,9 +28,9 @@ GSMap::GSMap()
 GSMap::~GSMap()
 {
 	//for (int i = 0; i < Globals::mapWidth; i++) {
-	//	delete m_mapMatrix[i];
+		//delete m_mapMatrix[i];
 	//}
-	//delete m_mapMatrix;
+	delete m_mapMatrix;
 }
 
 void GSMap::Init()
@@ -42,17 +44,37 @@ void GSMap::Init()
 
 
 	//map matrix
-	auto texture = ResourceManagers::GetInstance()->GetTexture("tileset/Field_Snow1.tga");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("tileset/SnowField.tga");
 	auto texture2 = ResourceManagers::GetInstance()->GetTexture("tileset/River.tga");
+	std::shared_ptr<LevelBase> levelSetUp;
+	
+	LevelZero lvl0;
 
+	switch (Globals::gameLevel) 
+	{
+	case 0:
+		for (int i = 0; i < Globals::mapWidth; i++) {
+			for (int j = 0; j < Globals::mapHeight; j++) {
+				m_map[i][j] = lvl0.mapping[i][j];
+			}
+		}
+		break;
+	default:
+		break;
+	}
 	for (int i = 0; i < Globals::mapWidth; i++) {
 		for (int j = 0; j < Globals::mapHeight; j++) {
-			if (i == 9 && j != 5 && j != 14 || j == 9 && i!=5 && i!=14) {
-				m_mapMatrix[i][j] = std::make_shared<MapSquare>(model, shader, texture2);
-				m_mapMatrix[i][j]->setPassable(false);
+			switch (m_map[i][j])
+			{
+			case SNOW_FIELD:
+				m_mapMatrix[i][j] = std::make_shared<SnowField>(model, shader, texture);
+				break;
+			case RIVER:
+				m_mapMatrix[i][j] = std::make_shared<River>(model, shader, texture2);
+				break;
+			default:
+				break;
 			}
-			else 
-				m_mapMatrix[i][j] = std::make_shared<MapSquare>(model, shader, texture);
 			m_mapMatrix[i][j]->setPosXY(i,j);
 			m_mapMatrix[i][j]->SetSize(Globals::squareLength, Globals::squareLength);
 		}

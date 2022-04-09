@@ -1,7 +1,7 @@
 #include "MapSquare.h"
 
 MapSquare::MapSquare(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture)
-	: Sprite2D(-1, model, shader, texture), m_posX(0), m_posY(0), m_evasion(0), m_maptype("unknown"), isPassable(true)
+	: Sprite2D(-1, model, shader, texture), m_posX(0), m_posY(0), m_evasion(0), m_defense(0), m_resistance(0), m_maptype("unknown"), isPassable(true)
 {
 	this->SetSize(Globals::squareLength, Globals::squareLength);
 }
@@ -23,6 +23,16 @@ GLint MapSquare::getPosY()
 GLint MapSquare::getEvasion()
 {
 	return this->m_evasion;
+}
+
+GLint MapSquare::getDefense()
+{
+	return this->m_defense;
+}
+
+GLint MapSquare::getResistance()
+{
+	return this->m_resistance;
 }
 
 std::string MapSquare::getMapType()

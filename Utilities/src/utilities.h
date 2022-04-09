@@ -6,6 +6,7 @@
 #include "Math.h"
 #include "TGA.h"
 #include "GameConfig.h"
+#include "Application.h"
 #include "Singleton.h"
 #include <list>
 #include <vector>

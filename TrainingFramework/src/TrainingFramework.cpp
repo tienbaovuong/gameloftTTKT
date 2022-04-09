@@ -7,7 +7,7 @@ int Globals::screenWidth = 770;
 int Globals::screenHeight = 770;
 int Globals::squareLength = 70;
 int Globals::gameLevel = 0;
-
+//AssetManager assetManager = AssetManager();
 
 GLint Init(ESContext* esContext)
 {

@@ -18,7 +18,6 @@ void Application::Init()
 
 	// Create a 2D camera
 	m_camera = std::make_shared<Camera>(0, 0, Globals::screenWidth, 0, Globals::screenHeight, -1.0f, 1.0f, 10.0f);
-
 	GameStateMachine::GetInstance()->PushState(StateType::STATE_INTRO);
 }
 

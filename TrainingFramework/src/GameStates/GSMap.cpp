@@ -14,7 +14,7 @@
 #include "Character.h"
 #include "SpriteAnimation.h"
 #include <Level/LevelZero.h>
-#include "MapTile/LevelHeader.h"
+#include "MapTile/MapTileHeader.h"
 
 GSMap::GSMap()
 	: currentState(0)
@@ -41,21 +41,35 @@ void GSMap::Init()
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
 
 	
+	//tile init
+	auto bridgeVer = ResourceManagers::GetInstance()->GetTexture("tileset/Bridge_Vertical.tga");	//checked
+	auto bridgeHor = ResourceManagers::GetInstance()->GetTexture("tileset/Bridge_Horizontal.tga");	//checked
+	auto camp = ResourceManagers::GetInstance()->GetTexture("tileset/Camp.tga");		//checked
+	auto castle = ResourceManagers::GetInstance()->GetTexture("tileset/Castle.tga");
+	auto chess = ResourceManagers::GetInstance()->GetTexture("tileset/Chess.tga");		//checked
+	auto emptyChess = ResourceManagers::GetInstance()->GetTexture("tileset/Opened_Chess.tga");
+	auto snowField = ResourceManagers::GetInstance()->GetTexture("tileset/SnowField.tga"); //checked
+	auto ground = ResourceManagers::GetInstance()->GetTexture("tileset/Ground.tga");		//checked
+	auto river = ResourceManagers::GetInstance()->GetTexture("tileset/River.tga");			//checked
+	auto frontEdge = ResourceManagers::GetInstance()->GetTexture("tileset/Front_Edge.tga");	//checked
+	auto leftEdge = ResourceManagers::GetInstance()->GetTexture("tileset/Left_Edge.tga");	//checked
+	auto leftCorner = ResourceManagers::GetInstance()->GetTexture("tileset/Leftcorner_Edge.tga");	//checked
+	auto rightEdge = ResourceManagers::GetInstance()->GetTexture("tileset/Right_Edge.tga");	//checked
+	auto rightCorner = ResourceManagers::GetInstance()->GetTexture("tileset/Rightcorner_Edge.tga");  //checked
+	auto snowTree = ResourceManagers::GetInstance()->GetTexture("tileset/Snow_Tree.tga");	//checked
+	auto tree = ResourceManagers::GetInstance()->GetTexture("tileset/Normal_Tree.tga");		//checked
+
+	//Level init
+	LevelZero lvl0 = LevelZero::LevelZero(model);
 
 
 	//map matrix
-	auto texture = ResourceManagers::GetInstance()->GetTexture("tileset/SnowField.tga");
-	auto texture2 = ResourceManagers::GetInstance()->GetTexture("tileset/River.tga");
-	std::shared_ptr<LevelBase> levelSetUp;
-	
-	LevelZero lvl0;
-
 	switch (Globals::gameLevel) 
 	{
 	case 0:
 		for (int i = 0; i < Globals::mapWidth; i++) {
 			for (int j = 0; j < Globals::mapHeight; j++) {
-				m_map[i][j] = lvl0.mapping[i][j];
+				m_map[j][i] = lvl0.mapping[i][j];
 			}
 		}
 		break;
@@ -67,10 +81,52 @@ void GSMap::Init()
 			switch (m_map[i][j])
 			{
 			case SNOW_FIELD:
-				m_mapMatrix[i][j] = std::make_shared<SnowField>(model, shader, texture);
+				m_mapMatrix[i][j] = std::make_shared<SnowField>(model, shader, snowField);
+				break;
+			case GROUND:
+				m_mapMatrix[i][j] = std::make_shared<Ground>(model, shader, ground);
 				break;
 			case RIVER:
-				m_mapMatrix[i][j] = std::make_shared<River>(model, shader, texture2);
+				m_mapMatrix[i][j] = std::make_shared<River>(model, shader, river);
+				break;
+			case SNOW_TREE:
+				m_mapMatrix[i][j] = std::make_shared<SnowTree>(model, shader, snowTree);
+				break;
+			case TREE:
+				m_mapMatrix[i][j] = std::make_shared<NormalTree>(model, shader, tree);
+				break;
+			case FRONT_EDGE:
+				m_mapMatrix[i][j] = std::make_shared<Edge>(model, shader, frontEdge);
+				break;
+			case LEFT_EDGE:
+				m_mapMatrix[i][j] = std::make_shared<Edge>(model, shader, leftEdge);
+				break;
+			case RIGHT_EDGE:
+				m_mapMatrix[i][j] = std::make_shared<Edge>(model, shader, rightEdge);
+				break;
+			case BRIDGE_VER:
+				m_mapMatrix[i][j] = std::make_shared<Bridge>(model, shader, bridgeVer);
+				break;
+			case BRIDGE_HOR:
+				m_mapMatrix[i][j] = std::make_shared<Bridge>(model, shader, bridgeHor);
+				break;
+			case CAMP:
+				m_mapMatrix[i][j] = std::make_shared<Camp>(model, shader, camp);
+				break;
+			case CHESS:
+				m_mapMatrix[i][j] = std::make_shared<Chess>(model, shader, chess);
+				break;
+			case LEFTCRNR:
+				m_mapMatrix[i][j] = std::make_shared<Edge>(model, shader, leftCorner);
+				break;
+			case RIGHTCRNR:
+				m_mapMatrix[i][j] = std::make_shared<Edge>(model, shader, rightCorner);
+				break;
+			case EMPTYCHESS:
+				m_mapMatrix[i][j] = std::make_shared<Chess>(model, shader, emptyChess);
+				break;
+			case CASTLE:
+				m_mapMatrix[i][j] = std::make_shared<Castle>(model, shader, castle);
 				break;
 			default:
 				break;
@@ -82,7 +138,7 @@ void GSMap::Init()
 
 
 	//map pointer
-	texture = ResourceManagers::GetInstance()->GetTexture("pointersquare.tga");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("pointersquare.tga");
 	m_mapPointer = std::make_shared<MapPointer>(model, shader, texture);
 	m_mapPointer->setPosXY(5, 5);
 	m_mapPointer->Set2DPosition(Globals::screenWidth / 2, Globals::screenHeight / 2);
@@ -131,26 +187,27 @@ void GSMap::Init()
 
 
 	//character
-
-	texture = ResourceManagers::GetInstance()->GetTexture("btn_quit.tga");
-	auto character = std::make_shared<Character>(model, shader, texture);
+	auto character = std::make_shared<Character>(model);
 	character->setPosXY(5, 5);
 	int x = 5, y = 5;
 	
-	auto shaderAnimation = ResourceManagers::GetInstance()->GetShader("Animation");
-	auto textureAnimation = ResourceManagers::GetInstance()->GetTexture(character->getCharName() + ".tga");
-	std::shared_ptr<SpriteAnimation> obj = std::make_shared<SpriteAnimation>(model, shaderAnimation, textureAnimation, 4, 4, 2, 0.25f);
-
-	obj->SetSize(Globals::squareLength * 2, Globals::squareLength * 2);
+	character->getFieldAnimation()->SetSize(Globals::squareLength * 2, Globals::squareLength * 2);
 	m_mapMatrix[x][y]->setCharacter(character);
-	character->setFieldAnimation(obj);
 	character->getFieldAnimation()->Set2DPosition(m_mapMatrix[x][y]->GetPosition().x, m_mapMatrix[x][y]->GetPosition().y);
 	m_listCharacter.push_back(character);
 
+	auto character2 = std::make_shared<Character>(model);
+	character2->setPosXY(6, 19);
+	x = 6;  y = 19;
+
+	character2->getFieldAnimation()->SetSize(Globals::squareLength * 2, Globals::squareLength * 2);
+	m_mapMatrix[x][y]->setCharacter(character2);
+	character2->getFieldAnimation()->Set2DPosition(m_mapMatrix[x][y]->GetPosition().x, m_mapMatrix[x][y]->GetPosition().y);
+	m_listCharacter.push_back(character2);
 
 	//debug
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
-	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Brightly Crush Shine.otf");
+	std::shared_ptr<Font> font = ResourceManagers::GetInstance()->GetFont("Ramaraja-Regular.ttf");
 	m_debug = std::make_shared<Text>(shader, font, "", TextColor::RED, 1.0);
 	m_debug->Set2DPosition(Vector2(5, 25));
 	
@@ -264,6 +321,7 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 				}
 				else {
 					m_chosenCharacter = m_mapMatrix[xtemp][ytemp]->getCharacter();
+					if (m_chosenCharacter->getDisableButton()) break;
 					m_chosenCharacter->calculateMovementMap(m_mapMatrix);
 					currentState = 1;
 				}

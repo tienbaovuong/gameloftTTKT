@@ -1,11 +1,11 @@
 #include "Character.h"
 #include <queue>
 
-Character::Character(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture)
-    :Sprite2D(-1, model, shader, texture), m_name("Ike"), m_level(1), m_healthPoint(1), m_strength(0)
+Character::Character(std::shared_ptr<Model> model)
+    :Sprite2D(-1, model, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->IkeField), m_name("Ike"), m_level(1), m_healthPoint(1), m_strength(0)
     , m_magic(0), m_defense(0), m_resistance(0), m_movement(5), m_characterType("unknown"), m_power(0)
     , m_hitRate(100), m_evasion(0), m_critRate(5), m_posX(0), m_posY(0), fieldAnimation(nullptr), m_isFinishTurn(false)
-    , m_time(0)
+    , m_time(0), m_disableButton(false)
 {
     m_movementMap = new MoveList* [Globals::mapWidth];
     for (int i = 0; i < Globals::mapWidth; i++) {
@@ -15,15 +15,16 @@ Character::Character(std::shared_ptr<Model> model, std::shared_ptr<Shader> shade
             m_movementMap[i][j].y = j;
         }
     }
+    fieldAnimation = std::make_shared<SpriteAnimation>(model, AssetManager::GetInstance()->shaderAnimation, AssetManager::GetInstance()->IkeField, 4, 4, 2, 0.25f);
 }
 
 
 Character::~Character()
 {
-    for (int i = 0; i < Globals::mapWidth; i++) {
-        delete m_movementMap[i];
-    }
-    delete m_movementMap;
+    //for (int i = 0; i < Globals::mapWidth; i++) {
+    //    delete m_movementMap[i];
+    //}
+    //delete m_movementMap;
 }
 
 void Character::Update(GLfloat deltatime)
@@ -51,12 +52,14 @@ void Character::Update(GLfloat deltatime)
             this->m_posX = temp.x;
             this->m_posY = temp.y;
             m_time = 0;
+            if (m_stackMove.empty()) m_disableButton = false;
         }
     }
 }
 
 void Character::move(GLint x, GLint y)
 {
+    m_disableButton = true;
     while(x != m_posX || y != m_posY) {
         auto temp = m_movementMap[x][y];
         m_stackMove.push(temp);
@@ -110,6 +113,11 @@ GLint Character::getMove()
 std::string Character::getCharName()
 {
     return this->m_name;
+}
+
+bool Character::getDisableButton()
+{
+    return this->m_disableButton;
 }
 
 void Character::resetMovementMap()

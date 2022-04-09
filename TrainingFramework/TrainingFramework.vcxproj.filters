@@ -102,14 +102,41 @@
     <ClCompile Include="src\GameObject\MapTile\SnowField.cpp">
       <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
     </ClCompile>
-    <ClCompile Include="LevelBase.cpp">
-      <Filter>TrainingFramework\src\GameObject\Level</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameObject\Level\LevelZero.cpp">
       <Filter>TrainingFramework\src\GameObject\Level</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObject\MapTile\River.cpp">
       <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\MapTile\Bridge.cpp">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Level\LevelBase.cpp">
+      <Filter>TrainingFramework\src\GameObject\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\MapTile\Camp.cpp">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Castle.cpp">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\MapTile\Chess.cpp">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\MapTile\Ground.cpp">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\MapTile\NormalTree.cpp">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="SnowTree.cpp">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Edge.cpp">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameManager\AssetManager.cpp">
+      <Filter>TrainingFramework\src\GameManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,8 +227,35 @@
     <ClInclude Include="src\GameObject\MapTile\River.h">
       <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\MapTile\LevelHeader.h">
+    <ClInclude Include="src\GameObject\MapTile\MapTileHeader.h">
       <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MapTile\Bridge.h">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MapTile\Camp.h">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MapTile\Castle.h">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MapTile\Chess.h">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MapTile\Ground.h">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MapTile\NormalTree.h">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MapTile\SnowTree.h">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\MapTile\Edge.h">
+      <Filter>TrainingFramework\src\GameObject\MapTiles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameManager\AssetManager.h">
+      <Filter>TrainingFramework\src\GameManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

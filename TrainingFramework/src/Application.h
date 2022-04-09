@@ -3,7 +3,7 @@
 #include "GameConfig.h"
 #include "Camera.h"
 
-
+class Camera;
 class Application : public CSingleton<Application>
 {
 public:
@@ -20,6 +20,7 @@ public:
 	std::shared_ptr<Camera> GetCamera() {
 		return m_camera;
 	}
+	
 
 private:
 	std::shared_ptr<Camera> m_camera;

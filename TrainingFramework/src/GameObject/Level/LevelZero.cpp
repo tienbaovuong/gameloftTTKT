@@ -1,9 +1,10 @@
 #include "Level/LevelZero.h"
 
 
-LevelZero::LevelZero(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture)
+LevelZero::LevelZero(std::shared_ptr<Model> model)
+	:LevelBase()
 {
-	std::shared_ptr<Character> enemy = std::make_shared<Character>(model, shader, texture);
+	auto enemy = std::make_shared<Character>(model);
 	m_enemyList.push_back(enemy);
 }
 

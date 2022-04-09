@@ -39,6 +39,7 @@ private:
 	std::list<std::shared_ptr<GameButton>>	m_listButtonOnPause;
 	std::list<std::shared_ptr<SpriteAnimation>>	m_listAnimation;
 	std::list<std::shared_ptr<Character>> m_listCharacter;
+	std::list<std::shared_ptr<Character>> m_listEnemy;
 	std::shared_ptr<MapPointer> m_mapPointer;
 	std::shared_ptr<Character> m_chosenCharacter;
 	std::shared_ptr <Sprite2D> m_moveMarker;

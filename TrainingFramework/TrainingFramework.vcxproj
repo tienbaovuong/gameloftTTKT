@@ -343,16 +343,25 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LevelBase.cpp" />
+    <ClCompile Include="Castle.cpp" />
+    <ClCompile Include="Edge.cpp" />
+    <ClCompile Include="SnowTree.cpp" />
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\GameManager\AssetManager.cpp" />
     <ClCompile Include="src\GameManager\ResourceManagers.cpp" />
     <ClCompile Include="src\GameObject\Character.cpp" />
     <ClCompile Include="src\GameObject\Font.cpp" />
     <ClCompile Include="src\GameObject\GameButton.cpp" />
     <ClCompile Include="src\GameObject\Item.cpp" />
+    <ClCompile Include="src\GameObject\Level\LevelBase.cpp" />
     <ClCompile Include="src\GameObject\Level\LevelZero.cpp" />
     <ClCompile Include="src\GameObject\MapPointer.cpp" />
     <ClCompile Include="src\GameObject\MapSquare.cpp" />
+    <ClCompile Include="src\GameObject\MapTile\Bridge.cpp" />
+    <ClCompile Include="src\GameObject\MapTile\Camp.cpp" />
+    <ClCompile Include="src\GameObject\MapTile\Chess.cpp" />
+    <ClCompile Include="src\GameObject\MapTile\Ground.cpp" />
+    <ClCompile Include="src\GameObject\MapTile\NormalTree.cpp" />
     <ClCompile Include="src\GameObject\MapTile\River.cpp" />
     <ClCompile Include="src\GameObject\MapTile\SnowField.cpp" />
     <ClCompile Include="src\GameObject\Sprite2D.cpp" />
@@ -374,6 +383,7 @@
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\GameConfig.h" />
+    <ClInclude Include="src\GameManager\AssetManager.h" />
     <ClInclude Include="src\GameManager\ResourceManagers.h" />
     <ClInclude Include="src\GameManager\Singleton.h" />
     <ClInclude Include="src\GameObject\BaseObject.h" />
@@ -385,9 +395,17 @@
     <ClInclude Include="src\GameObject\Level\LevelZero.h" />
     <ClInclude Include="src\GameObject\MapPointer.h" />
     <ClInclude Include="src\GameObject\MapSquare.h" />
-    <ClInclude Include="src\GameObject\MapTile\LevelHeader.h" />
+    <ClInclude Include="src\GameObject\MapTile\Bridge.h" />
+    <ClInclude Include="src\GameObject\MapTile\Camp.h" />
+    <ClInclude Include="src\GameObject\MapTile\Castle.h" />
+    <ClInclude Include="src\GameObject\MapTile\Chess.h" />
+    <ClInclude Include="src\GameObject\MapTile\Edge.h" />
+    <ClInclude Include="src\GameObject\MapTile\Ground.h" />
+    <ClInclude Include="src\GameObject\MapTile\MapTileHeader.h" />
+    <ClInclude Include="src\GameObject\MapTile\NormalTree.h" />
     <ClInclude Include="src\GameObject\MapTile\River.h" />
     <ClInclude Include="src\GameObject\MapTile\SnowField.h" />
+    <ClInclude Include="src\GameObject\MapTile\SnowTree.h" />
     <ClInclude Include="src\GameObject\Sprite2D.h" />
     <ClInclude Include="src\GameObject\Camera.h" />
     <ClInclude Include="src\GameObject\Sprite3D.h" />

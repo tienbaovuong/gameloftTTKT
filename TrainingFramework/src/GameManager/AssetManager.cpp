@@ -9,7 +9,19 @@ AssetManager::AssetManager()
 	shaderText = ResourceManagers::GetInstance()->GetShader("TextShader");
 
 	//Ike
-	IkeField = ResourceManagers::GetInstance()->GetTexture("Ike.tga");
+	IkeField = ResourceManagers::GetInstance()->GetTexture("character sprites/IkeField.tga");
+
+	//Dorcas
+	DorcasField = ResourceManagers::GetInstance()->GetTexture("character sprites/DorcasField.tga");
+
+	//Serra
+	SerraField = ResourceManagers::GetInstance()->GetTexture("character sprites/SerraField.tga");
+
+	//Enemy Bandit
+	EnemyBanditField = ResourceManagers::GetInstance()->GetTexture("character sprites/EnemyBanditField.tga");
+
+	//Enemy Bandit Leader
+	EnemyBanditLeaderField = ResourceManagers::GetInstance()->GetTexture("character sprites/EnemyBanditLeaderField.tga");
 }
 
 AssetManager::~AssetManager()

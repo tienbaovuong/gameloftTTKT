@@ -5,9 +5,20 @@ class LevelZero:
 	public LevelBase
 {
 public:
-	LevelZero(){}
-	LevelZero(std::shared_ptr<Model> model);
+	LevelZero();
 	~LevelZero();
+
+	std::shared_ptr<Ike> ike;
+	std::shared_ptr<Dorcas> dorcas;
+	std::shared_ptr<Serra> serra;
+	std::shared_ptr<EnemyBanditHeader> banditLeader;
+	std::shared_ptr<EnemyBandit> bandit1;
+	std::shared_ptr<EnemyBandit> bandit2;
+	std::shared_ptr<EnemyBandit> bandit3;
+	std::shared_ptr<EnemyBandit> bandit4;
+	std::shared_ptr<EnemyBandit> bandit5;
+	std::shared_ptr<EnemyBandit> bandit6;
+	std::shared_ptr<EnemyBandit> bandit7;
 
 	const int mapping[Globals::mapWidth][Globals::mapHeight] =
 	{				/*0*/		/*1*/		/*2*/		/*3*/		/*4*/		/*5*/		/*6*/		/*7*/		/*8*/		/*9*/		/*10*/		/*11*/		/*12*/		/*13*/		/*14*/		/*15*/		/*16*/		/*17*/		/*18*/		/*19*/
@@ -37,7 +48,7 @@ public:
 
 		/*12*/	{		GROUND,		GROUND,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	  LEFTCRNR,	RIGHTCRNR,	SNOW_FIELD,	   GROUND,	SNOW_FIELD,	  LEFTCRNR,	FRONT_EDGE,	FRONT_EDGE,	FRONT_EDGE,	FRONT_EDGE,	FRONT_EDGE,	 RIGHTCRNR,	SNOW_FIELD,	SNOW_FIELD},
 
-		/*13*/	{		GROUND,		GROUND,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	   GROUND,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD},
+		/*13*/	{		GROUND,		GROUND,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	   GROUND,	SNOW_FIELD,	SNOW_FIELD,		  ROCK,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD},
 
 		/*14*/	{		GROUND,		GROUND,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	   GROUND,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD,	SNOW_FIELD},
 

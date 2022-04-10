@@ -344,12 +344,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Castle.cpp" />
+    <ClCompile Include="CharacterBase.cpp" />
     <ClCompile Include="Edge.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="SnowTree.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\GameManager\AssetManager.cpp" />
     <ClCompile Include="src\GameManager\ResourceManagers.cpp" />
     <ClCompile Include="src\GameObject\Character.cpp" />
+    <ClCompile Include="src\GameObject\Character\Ally.cpp" />
+    <ClCompile Include="src\GameObject\Character\Dorcas.cpp" />
+    <ClCompile Include="src\GameObject\Character\EnemyBandit.cpp" />
+    <ClCompile Include="src\GameObject\Character\EnemyBanditHeader.cpp" />
+    <ClCompile Include="src\GameObject\Character\Ike.cpp" />
+    <ClCompile Include="src\GameObject\Character\Priest.cpp" />
+    <ClCompile Include="src\GameObject\Character\Serra.cpp" />
+    <ClCompile Include="src\GameObject\Character\Warrior.cpp" />
     <ClCompile Include="src\GameObject\Font.cpp" />
     <ClCompile Include="src\GameObject\GameButton.cpp" />
     <ClCompile Include="src\GameObject\Item.cpp" />
@@ -379,6 +389,7 @@
     <ClCompile Include="src\GameStates\GSMenu.cpp" />
     <ClCompile Include="src\GameStates\GSPlay.cpp" />
     <ClCompile Include="src\TrainingFramework.cpp" />
+    <ClCompile Include="SwordMan.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
@@ -388,10 +399,23 @@
     <ClInclude Include="src\GameManager\Singleton.h" />
     <ClInclude Include="src\GameObject\BaseObject.h" />
     <ClInclude Include="src\GameObject\Character.h" />
+    <ClInclude Include="src\GameObject\Character\Ally.h" />
+    <ClInclude Include="src\GameObject\Character\CharacterBase.h" />
+    <ClInclude Include="src\GameObject\Character\CharacterHeader.h" />
+    <ClInclude Include="src\GameObject\Character\Dorcas.h" />
+    <ClInclude Include="src\GameObject\Character\Enemy.h" />
+    <ClInclude Include="src\GameObject\Character\EnemyBandit.h" />
+    <ClInclude Include="src\GameObject\Character\EnemyBanditHeader.h" />
+    <ClInclude Include="src\GameObject\Character\Ike.h" />
+    <ClInclude Include="src\GameObject\Character\Priest.h" />
+    <ClInclude Include="src\GameObject\Character\Serra.h" />
+    <ClInclude Include="src\GameObject\Character\SwordMan.h" />
+    <ClInclude Include="src\GameObject\Character\Warrior.h" />
     <ClInclude Include="src\GameObject\Font.h" />
     <ClInclude Include="src\GameObject\GameButton.h" />
     <ClInclude Include="src\GameObject\Item.h" />
     <ClInclude Include="src\GameObject\Level\LevelBase.h" />
+    <ClInclude Include="src\GameObject\Level\LevelHeader.h" />
     <ClInclude Include="src\GameObject\Level\LevelZero.h" />
     <ClInclude Include="src\GameObject\MapPointer.h" />
     <ClInclude Include="src\GameObject\MapSquare.h" />

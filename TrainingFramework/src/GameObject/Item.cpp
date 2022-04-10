@@ -13,3 +13,8 @@ void Item::reduceDurability(GLint duraLost)
 	this->m_durability -= duraLost;
 }
 
+std::string Item::getType()
+{
+	return this->m_type;
+}
+

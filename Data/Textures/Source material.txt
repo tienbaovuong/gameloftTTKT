@@ -9,4 +9,9 @@ tileset:
 	https://www.reddit.com/r/srpgstudio/comments/96twyk/fire_emblem_gba_tile_sets_converted_by_blueleafy/
 	https://pngtree.com/freepng/square-frame-light-effect_6706952.html
 	https://www.pngwing.com/en/free-png-dxkah#google_vignette
+	https://www.pngwing.com/en/free-png-dxxbl
 	https://creazilla-store.fra1.digitaloceanspaces.com/emojis/42606/brown-square-emoji-clipart-xl.png
+
+character:
+	https://www.deviantart.com/elementalworks/art/Ike-RPG-Maker-VX-Overworld-556087753
+	RPG Maker VX Ace character maker

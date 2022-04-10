@@ -29,6 +29,7 @@ public:
 	void	Update(float deltaTime) override;
 	void	Draw() override;
 	
+	void	GameOver();
 	bool	checkEndTurn();
 
 private:
@@ -43,8 +44,9 @@ private:
 	std::shared_ptr<MapPointer> m_mapPointer;
 	std::shared_ptr<Character> m_chosenCharacter;
 	std::shared_ptr <Sprite2D> m_moveMarker;
+	std::shared_ptr <Sprite2D> m_atkMarker;
 
- 	//0 = normal map state, 1 = character moving state, 2 = character wait state, 3 = enemy turn
+ 	//0 = normal map state, 1 = character moving state, 2 = character pick action, 3 = choose target, 4 = enemy turn
 	GLint currentState = 0;
 
 	//text
@@ -52,5 +54,7 @@ private:
 	std::shared_ptr<Text>		m_debug;
 	std::shared_ptr<Text>		m_numMovement;
 	
+	//main character
+	std::shared_ptr<Character> m_mainCharacter;
 };
 

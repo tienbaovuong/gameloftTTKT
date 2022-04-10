@@ -13,7 +13,7 @@
 #include "MapPointer.h"
 #include "Character.h"
 #include "SpriteAnimation.h"
-#include <Level/LevelZero.h>
+#include "Level/LevelHeader.h"
 #include "MapTile/MapTileHeader.h"
 
 GSMap::GSMap()
@@ -37,6 +37,7 @@ void GSMap::Init()
 {
 	m_isPause = false;
 	m_chosenCharacter = nullptr;
+	m_mainCharacter = nullptr;
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
 	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
 
@@ -58,11 +59,12 @@ void GSMap::Init()
 	auto rightCorner = ResourceManagers::GetInstance()->GetTexture("tileset/Rightcorner_Edge.tga");  //checked
 	auto snowTree = ResourceManagers::GetInstance()->GetTexture("tileset/Snow_Tree.tga");	//checked
 	auto tree = ResourceManagers::GetInstance()->GetTexture("tileset/Normal_Tree.tga");		//checked
-
+	auto rock = ResourceManagers::GetInstance()->GetTexture("tileset/Rock.tga");		//checked
 	//Level init
-	LevelZero lvl0 = LevelZero::LevelZero(model);
+	printf("Step 0");
+	LevelZero lvl0;
 
-
+	printf("Step 1");
 	//map matrix
 	switch (Globals::gameLevel) 
 	{
@@ -72,6 +74,20 @@ void GSMap::Init()
 				m_map[j][i] = lvl0.mapping[i][j];
 			}
 		}
+		for (auto it : lvl0.m_alliesList) {
+			m_listCharacter.push_back(it);
+			printf("Step 2");
+			it->getFieldAnimation()->SetSize(Globals::squareLength * 2, Globals::squareLength * 2);
+			printf("Step 3");
+			//m_mapMatrix[it->getPosX()][it->getPosY()]->setCharacter(it);
+		}
+		printf("Step 2");
+		for (auto it : lvl0.m_enemyList) {
+			m_listEnemy.push_back(it);
+			it->getFieldAnimation()->SetSize(Globals::squareLength * 2, Globals::squareLength * 2);
+			//m_mapMatrix[it->getPosX()][it->getPosY()]->setCharacter(it);
+		}
+		printf("Step 3");
 		break;
 	default:
 		break;
@@ -103,6 +119,9 @@ void GSMap::Init()
 				break;
 			case RIGHT_EDGE:
 				m_mapMatrix[i][j] = std::make_shared<Edge>(model, shader, rightEdge);
+				break;
+			case ROCK:
+				m_mapMatrix[i][j] = std::make_shared<Edge>(model, shader, rock);
 				break;
 			case BRIDGE_VER:
 				m_mapMatrix[i][j] = std::make_shared<Bridge>(model, shader, bridgeVer);
@@ -149,6 +168,10 @@ void GSMap::Init()
 	texture = ResourceManagers::GetInstance()->GetTexture("blueCircle.tga");
 	m_moveMarker = std::make_shared<Sprite2D>(model, shader, texture);
 	m_moveMarker->SetSize(Globals::squareLength, Globals::squareLength);
+	//possible atk marker
+	texture = ResourceManagers::GetInstance()->GetTexture("redCircle.tga");
+	m_atkMarker = std::make_shared<Sprite2D>(model, shader, texture);
+	m_atkMarker->SetSize(Globals::squareLength, Globals::squareLength);
 
 	// button list
 	// button pause
@@ -187,7 +210,7 @@ void GSMap::Init()
 
 
 	//character
-	auto character = std::make_shared<Character>(model);
+	/*auto character = std::make_shared<Character>(1,0);
 	character->setPosXY(5, 5);
 	int x = 5, y = 5;
 	
@@ -196,14 +219,17 @@ void GSMap::Init()
 	character->getFieldAnimation()->Set2DPosition(m_mapMatrix[x][y]->GetPosition().x, m_mapMatrix[x][y]->GetPosition().y);
 	m_listCharacter.push_back(character);
 
-	auto character2 = std::make_shared<Character>(model);
+	auto character2 = std::make_shared<Character>(1,0);
 	character2->setPosXY(6, 19);
 	x = 6;  y = 19;
 
 	character2->getFieldAnimation()->SetSize(Globals::squareLength * 2, Globals::squareLength * 2);
 	m_mapMatrix[x][y]->setCharacter(character2);
 	character2->getFieldAnimation()->Set2DPosition(m_mapMatrix[x][y]->GetPosition().x, m_mapMatrix[x][y]->GetPosition().y);
-	m_listCharacter.push_back(character2);
+	m_listCharacter.push_back(character2);*/
+
+
+
 
 	//debug
 	shader = ResourceManagers::GetInstance()->GetShader("TextShader");
@@ -247,6 +273,7 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 		{
 		case KEY_MOVE_LEFT:
 		case KEY_LEFT:
+			if (currentState == 2) break;
 			//pointer transition
 			if (m_mapPointer->getPosX() == 0) break;
 			m_mapPointer->setPosXY(m_mapPointer->getPosX() - 1, m_mapPointer->getPosY());
@@ -265,6 +292,7 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 			break;
 		case KEY_MOVE_BACKWORD:
 		case KEY_DOWN:
+			if (currentState == 2) break;
 			//pointer transition
 			if (m_mapPointer->getPosY() == Globals::mapHeight-1) break;
 			m_mapPointer->setPosXY(m_mapPointer->getPosX(), m_mapPointer->getPosY()+1);
@@ -281,6 +309,7 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 			break;
 		case KEY_MOVE_RIGHT:
 		case KEY_RIGHT:
+			if (currentState == 2) break;
 			//pointer transition
 			if (m_mapPointer->getPosX() == Globals::mapWidth-1) break;
 			m_mapPointer->setPosXY(m_mapPointer->getPosX() + 1, m_mapPointer->getPosY());
@@ -297,6 +326,7 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 			break;
 		case KEY_MOVE_FORWORD:
 		case KEY_UP:
+			if (currentState == 2) break;
 			//pointer transition
 			if (m_mapPointer->getPosY() == 0) break;
 			m_mapPointer->setPosXY(m_mapPointer->getPosX(), m_mapPointer->getPosY() - 1);
@@ -321,7 +351,6 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 				}
 				else {
 					m_chosenCharacter = m_mapMatrix[xtemp][ytemp]->getCharacter();
-					if (m_chosenCharacter->getDisableButton()) break;
 					m_chosenCharacter->calculateMovementMap(m_mapMatrix);
 					currentState = 1;
 				}
@@ -329,9 +358,10 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 
 			case 1:
 				//printf("%d", m_chosenCharacter->getMovementMap()[xtemp][ytemp].mark);
+				if (m_chosenCharacter->isEnemy()) currentState = 0;
 				if (m_chosenCharacter->getMovementMap()[xtemp][ytemp].mark) {
-					//currentState = 2;
-					currentState = 0;
+					currentState = 2;
+					//currentState = 0;
 					m_mapMatrix[m_chosenCharacter->getPosX()][m_chosenCharacter->getPosY()]->setCharacter(nullptr);
 					m_mapMatrix[xtemp][ytemp]->setCharacter(m_chosenCharacter);
 					m_chosenCharacter->move(xtemp, ytemp);
@@ -339,8 +369,13 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 				break;
 
 			case 2:
+				if (m_chosenCharacter->getDisableButton()) break;
+				m_chosenCharacter->calculateAttackMap(m_mapMatrix);
+				currentState = 3;
+				break;
+			case 3:
 				//m_mapMatrix[xtemp][ytemp]->getCharacter()->setFinishTurn(true);
-				if (checkEndTurn()) currentState = 3;
+				if (checkEndTurn()) currentState = 4;
 				else currentState = 0;
 				break;
 			}
@@ -379,6 +414,11 @@ void GSMap::HandleMouseMoveEvents(int x, int y)
 
 void GSMap::Update(float deltaTime)
 {
+	if (m_mainCharacter != nullptr) {
+		if (!m_mainCharacter->getAlive()) {
+			GameOver();
+		}
+	}
 	if (m_isPause.get()) {
 		for (auto it : m_listButtonOnPause)
 		{
@@ -415,6 +455,13 @@ void GSMap::Update(float deltaTime)
 		it->getFieldAnimation()->Set2DPosition(m_mapMatrix[xtemp][ytemp]->GetPosition().x, m_mapMatrix[xtemp][ytemp]->GetPosition().y);
 		it->getFieldAnimation()->Update(deltaTime);
 	}
+	for (auto it : m_listEnemy)
+	{
+		it->Update(deltaTime);
+		xtemp = it->getPosX(); ytemp = it->getPosY();
+		it->getFieldAnimation()->Set2DPosition(m_mapMatrix[xtemp][ytemp]->GetPosition().x, m_mapMatrix[xtemp][ytemp]->GetPosition().y);
+		it->getFieldAnimation()->Update(deltaTime);
+	}
 }
 
 void GSMap::Draw()
@@ -436,12 +483,31 @@ void GSMap::Draw()
 			}
 		}
 	}
+	if (currentState == 3) {
+		MoveList** temp = m_chosenCharacter->getMovementMap();
+		for (int i = 0; i < Globals::mapWidth; i++) {
+			for (int j = 0; j < Globals::mapHeight; j++) {
+				if (temp[i][j].atkMark == true) {
+					m_atkMarker->Set2DPosition(m_mapMatrix[i][j]->GetPosition().x, m_mapMatrix[i][j]->GetPosition().y);
+					m_atkMarker->Draw();
+				}
+			}
+		}
+	}
+	for (auto it : m_listCharacter)
+	{
+		it->getFieldAnimation()->Draw();
+	}
+	for (auto it : m_listEnemy)
+	{
+		it->getFieldAnimation()->Draw();
+	}
 	m_mapPointer->Draw();
 	
-	for (auto it : m_listAnimation)
+	/*for (auto it : m_listAnimation)
 	{
 		it->Draw();
-	}
+	}*/
 	m_debug->Draw();
 	m_numMovement->Draw();
 	m_infoTile->Draw();
@@ -449,11 +515,7 @@ void GSMap::Draw()
 	{
 		it->Draw();
 	}
-	for (auto it : m_listCharacter)
-	{
-		it->getFieldAnimation()->Draw();
-	}
-
+	
 	if (m_isPause.get()) {
 		for (auto it : m_listButtonOnPause)
 		{
@@ -461,6 +523,11 @@ void GSMap::Draw()
 		}
 	}
 	
+}
+
+void GSMap::GameOver()
+{
+	printf("Game Over");
 }
 
 bool GSMap::checkEndTurn()

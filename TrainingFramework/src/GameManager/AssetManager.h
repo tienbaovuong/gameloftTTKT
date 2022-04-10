@@ -17,5 +17,17 @@ public:
 
 	//Ike
 	std::shared_ptr<Texture> AssetManager::IkeField;
+
+	//Dorcas
+	std::shared_ptr<Texture> AssetManager::DorcasField;
+
+	//Serra
+	std::shared_ptr<Texture> AssetManager::SerraField;
+
+	//Enemy Bandit
+	std::shared_ptr<Texture> AssetManager::EnemyBanditField;
+
+	//Enemy Bandit Leader
+	std::shared_ptr<Texture> AssetManager::EnemyBanditLeaderField;
 };
 

@@ -29,6 +29,8 @@ public:
 
 	//level
 	static int Globals::gameLevel;
+
+	
 };
 
 // define value
@@ -63,7 +65,7 @@ public:
 #define	RIGHTCRNR			14
 #define SNOW_TREE			15
 #define TREE				16
-
+#define ROCK				17
 
 #ifdef WIN32
 

@@ -138,6 +138,39 @@
     <ClCompile Include="src\GameManager\AssetManager.cpp">
       <Filter>TrainingFramework\src\GameManager</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\Character\Ally.cpp">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Character\Priest.cpp">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="SwordMan.cpp">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Character\Warrior.cpp">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Character\EnemyBandit.cpp">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Character\EnemyBanditHeader.cpp">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Character\Ike.cpp">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Character\Dorcas.cpp">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Character\Serra.cpp">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterBase.cpp">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -256,6 +289,45 @@
     </ClInclude>
     <ClInclude Include="src\GameManager\AssetManager.h">
       <Filter>TrainingFramework\src\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Level\LevelHeader.h">
+      <Filter>TrainingFramework\src\GameObject\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Character\CharacterHeader.h">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Character\Ally.h">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Character\Enemy.h">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Character\Priest.h">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Character\SwordMan.h">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Character\Warrior.h">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Character\EnemyBandit.h">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Character\EnemyBanditHeader.h">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Character\Ike.h">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Character\Dorcas.h">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Character\Serra.h">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Character\CharacterBase.h">
+      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

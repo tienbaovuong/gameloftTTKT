@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite2D.h"
 #include "Character.h"
+#include <string>
 class Character;
 class Item: public Sprite2D
 {
@@ -12,13 +13,14 @@ public:
 	virtual bool isTargettable(Character user, Character other) = 0;
 	virtual void effect(Character user, Character other) = 0;
 	void reduceDurability(GLint duraLost);
+	std::string getType();
 
 protected:
 	GLint m_minRange;
 	GLint m_maxRange;
 	GLint m_durability;
 	GLint m_power;
-	char* m_type;
+	std::string m_type;
 	GLint m_hitRate;
 	GLint m_critRate;
 };

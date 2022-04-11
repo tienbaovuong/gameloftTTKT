@@ -61,10 +61,10 @@ void GSMap::Init()
 	auto tree = ResourceManagers::GetInstance()->GetTexture("tileset/Normal_Tree.tga");		//checked
 	auto rock = ResourceManagers::GetInstance()->GetTexture("tileset/Rock.tga");		//checked
 	//Level init
-	printf("Step 0");
+	//printf("Step 0");
 	LevelZero lvl0;
 
-	printf("Step 1");
+	//printf("Step 1");
 	//map matrix
 	switch (Globals::gameLevel) 
 	{
@@ -76,18 +76,18 @@ void GSMap::Init()
 		}
 		for (auto it : lvl0.m_alliesList) {
 			m_listCharacter.push_back(it);
-			printf("Step 2");
+			//printf("Step 2");
 			it->getFieldAnimation()->SetSize(Globals::squareLength * 2, Globals::squareLength * 2);
-			printf("Step 3");
+			//printf("Step 3");
 			//m_mapMatrix[it->getPosX()][it->getPosY()]->setCharacter(it);
 		}
-		printf("Step 2");
+		//printf("Step 2");
 		for (auto it : lvl0.m_enemyList) {
 			m_listEnemy.push_back(it);
 			it->getFieldAnimation()->SetSize(Globals::squareLength * 2, Globals::squareLength * 2);
 			//m_mapMatrix[it->getPosX()][it->getPosY()]->setCharacter(it);
 		}
-		printf("Step 3");
+		//printf("Step 3");
 		break;
 	default:
 		break;
@@ -154,7 +154,12 @@ void GSMap::Init()
 			m_mapMatrix[i][j]->SetSize(Globals::squareLength, Globals::squareLength);
 		}
 	}
-
+	for (auto it : m_listCharacter) {
+		m_mapMatrix[it->getPosX()][it->getPosY()]->setCharacter(it);
+	}
+	for (auto it : m_listEnemy) {
+		m_mapMatrix[it->getPosX()][it->getPosY()]->setCharacter(it);
+	}
 
 	//map pointer
 	auto texture = ResourceManagers::GetInstance()->GetTexture("pointersquare.tga");
@@ -358,7 +363,7 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 
 			case 1:
 				//printf("%d", m_chosenCharacter->getMovementMap()[xtemp][ytemp].mark);
-				if (m_chosenCharacter->isEnemy()) currentState = 0;
+				if (m_chosenCharacter->isEnemy()) { currentState = 0; break; }
 				if (m_chosenCharacter->getMovementMap()[xtemp][ytemp].mark) {
 					currentState = 2;
 					//currentState = 0;
@@ -366,6 +371,7 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 					m_mapMatrix[xtemp][ytemp]->setCharacter(m_chosenCharacter);
 					m_chosenCharacter->move(xtemp, ytemp);
 				}
+				else currentState = 0;
 				break;
 
 			case 2:

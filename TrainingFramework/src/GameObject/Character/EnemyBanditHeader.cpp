@@ -1,6 +1,7 @@
 #include "EnemyBanditHeader.h"
 
 EnemyBanditHeader::EnemyBanditHeader(GLint level, GLint exp)
+	:Enemy(level, exp)
 {
 	this->m_name = "Bandit Leader";
 	this->m_maxHealthPoint = 1;

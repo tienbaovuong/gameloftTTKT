@@ -54,6 +54,7 @@ public:
     void setFinishTurn(bool finish);
     GLint getMove();
     std::string getCharName();
+    void setCharName(std::string name);
     bool isEnemy();
     bool getDisableButton();
     bool getAlive();

@@ -1,7 +1,7 @@
 #include "MapSquare.h"
 
 MapSquare::MapSquare(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture)
-	: Sprite2D(-1, model, shader, texture), m_posX(0), m_posY(0), m_evasion(0), m_defense(0), m_resistance(0), m_maptype("unknown"), isPassable(true)
+	: Sprite2D(-1, model, shader, texture), m_posX(0), m_posY(0), m_evasion(0), m_defense(0), m_resistance(0), m_maptype("unknown"), isPassable(true), isChess(false)
 {
 	this->SetSize(Globals::squareLength, Globals::squareLength);
 }
@@ -60,11 +60,11 @@ void MapSquare::setPassable(bool pass)
 	this->isPassable = pass;
 }
 
-void MapSquare::setPosXY(GLint x, GLint y)
+void MapSquare::setPosXY(GLint x, GLint y, GLint xOffset, GLint yOffset)
 {
 	this->m_posX = x;
 	this->m_posY = y;
-	this->Set2DPosition((float)Globals::squareLength * (x + 0.5), (float)Globals::squareLength * (y + 0.5));
+	this->Set2DPosition((float)Globals::squareLength * (x - xOffset + 0.5), (float)Globals::squareLength * (y - yOffset + 0.5));
 }
 
 void MapSquare::setDrawPos(GLint x, GLint y)

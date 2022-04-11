@@ -14,7 +14,8 @@ public:
 	std::shared_ptr<Shader> AssetManager::shaderTexture;
 	std::shared_ptr<Shader> AssetManager::shaderAnimation;
 	std::shared_ptr<Shader> AssetManager::shaderText;
-
+	//brown box
+	std::shared_ptr<Texture> AssetManager::brownBox;
 	//Ike
 	std::shared_ptr<Texture> AssetManager::IkeField;
 

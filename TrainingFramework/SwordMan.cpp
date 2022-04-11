@@ -4,7 +4,7 @@ SwordMan::SwordMan(GLint level, GLint exp)
 	:Ally(level, exp)
 {
 	this->m_characterType = "Sword Man";
-	this->m_movement = 5;
+	this->m_movement = 6;
 }
 
 SwordMan::~SwordMan()

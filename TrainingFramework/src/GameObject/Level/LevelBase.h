@@ -14,5 +14,9 @@ public:
 
 	std::list<std::shared_ptr<Enemy>> m_enemyList;
 	std::list<std::shared_ptr<Ally>> m_alliesList;
+	int startXPointer;
+	int startYPointer;
+	int xOffset;
+	int yOffset;
 };
 

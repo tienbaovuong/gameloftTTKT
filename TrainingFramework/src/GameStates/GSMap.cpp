@@ -66,6 +66,7 @@ void GSMap::Init()
 
 	//printf("Step 1");
 	//map matrix
+	int startXPointer = 0, startYPointer = 0, xOffset = 0, yOffset = 0;
 	switch (Globals::gameLevel) 
 	{
 	case 0:
@@ -74,6 +75,7 @@ void GSMap::Init()
 				m_map[j][i] = lvl0.mapping[i][j];
 			}
 		}
+		startXPointer = lvl0.startXPointer; startYPointer = lvl0.startYPointer; xOffset = lvl0.xOffset; yOffset = lvl0.yOffset;
 		for (auto it : lvl0.m_alliesList) {
 			m_listCharacter.push_back(it);
 			//printf("Step 2");
@@ -150,7 +152,7 @@ void GSMap::Init()
 			default:
 				break;
 			}
-			m_mapMatrix[i][j]->setPosXY(i,j);
+			m_mapMatrix[i][j]->setPosXY(i,j, xOffset, yOffset);
 			m_mapMatrix[i][j]->SetSize(Globals::squareLength, Globals::squareLength);
 		}
 	}
@@ -164,7 +166,7 @@ void GSMap::Init()
 	//map pointer
 	auto texture = ResourceManagers::GetInstance()->GetTexture("pointersquare.tga");
 	m_mapPointer = std::make_shared<MapPointer>(model, shader, texture);
-	m_mapPointer->setPosXY(5, 5);
+	m_mapPointer->setPosXY(startXPointer, startYPointer);
 	m_mapPointer->Set2DPosition(Globals::screenWidth / 2, Globals::screenHeight / 2);
 	m_mapPointer->SetSize(Globals::squareLength, Globals::squareLength);
 
@@ -173,10 +175,37 @@ void GSMap::Init()
 	texture = ResourceManagers::GetInstance()->GetTexture("blueCircle.tga");
 	m_moveMarker = std::make_shared<Sprite2D>(model, shader, texture);
 	m_moveMarker->SetSize(Globals::squareLength, Globals::squareLength);
+
 	//possible atk marker
 	texture = ResourceManagers::GetInstance()->GetTexture("redCircle.tga");
 	m_atkMarker = std::make_shared<Sprite2D>(model, shader, texture);
 	m_atkMarker->SetSize(Globals::squareLength, Globals::squareLength);
+
+	//brown box
+	texture = AssetManager::GetInstance()->brownBox;
+	mapsquareInfoBox = std::make_shared<Sprite2D>(model, shader, texture);
+	mapsquareInfoBox->SetSize(200, 50);
+	mapsquareInfoBox->Set2DPosition(100, Globals::screenHeight - 25);
+
+	characterNameBox = std::make_shared<Sprite2D>(model, shader, texture);
+	characterNameBox->SetSize(160, 30);
+	characterNameBox->Set2DPosition(75, 15);
+
+	attackOption = std::make_shared<Sprite2D>(model, shader, texture);
+	attackOption->SetSize(400, Globals::screenHeight*0.25);
+	attackOption->Set2DPosition(Globals::screenWidth/2, Globals::screenHeight * 0.125);
+
+	itemOption = std::make_shared<Sprite2D>(model, shader, texture);
+	itemOption->SetSize(400, Globals::screenHeight * 0.25);
+	itemOption->Set2DPosition(Globals::screenWidth / 2, Globals::screenHeight * 0.375);
+
+	waitOption = std::make_shared<Sprite2D>(model, shader, texture);
+	waitOption->SetSize(400, Globals::screenHeight * 0.25);
+	waitOption->Set2DPosition(Globals::screenWidth / 2, Globals::screenHeight * 0.625);
+
+	openChestOption = std::make_shared<Sprite2D>(model, shader, texture);
+	openChestOption->SetSize(400, Globals::screenHeight * 0.25);
+	openChestOption->Set2DPosition(Globals::screenWidth / 2, Globals::screenHeight * 0.875);
 
 	// button list
 	// button pause
@@ -244,9 +273,39 @@ void GSMap::Init()
 	
 	m_numMovement = std::make_shared<Text>(shader, font, "", TextColor::RED, 1.0);
 	m_numMovement->Set2DPosition(Globals::screenWidth - 110, Globals::screenHeight - 10);
+	
 	//Evasion info
-	m_infoTile = std::make_shared<Text>(shader, font, "", TextColor::RED, 1.0);
-	m_infoTile->Set2DPosition(Vector2(10, Globals::screenHeight - 10));
+	m_infoEvasion = std::make_shared<Text>(shader, font, "", TextColor::WHITE, 1.0);
+	m_infoEvasion->Set2DPosition(Vector2(10, Globals::screenHeight - 10));
+	//Map type info
+	m_infoSquareType = std::make_shared<Text>(shader, font, "", TextColor::WHITE, 1.0);
+	m_infoSquareType->Set2DPosition(Vector2(10, Globals::screenHeight - 30));
+	//Def info
+	m_infoDef = std::make_shared<Text>(shader, font, "", TextColor::WHITE, 1.0);
+	m_infoDef->Set2DPosition(Vector2(110, Globals::screenHeight - 30));
+	//Res info
+	m_infoRes = std::make_shared<Text>(shader, font, "", TextColor::WHITE, 1.0);
+	m_infoRes->Set2DPosition(Vector2(110, Globals::screenHeight - 10));
+
+	//Character name
+	m_charName = std::make_shared<Text>(shader, font, "", TextColor::WHITE, 1.0);
+	m_charName->Set2DPosition(10, 20);
+
+	//attack option
+	m_attackWord = std::make_shared<Text>(shader, font, "Attack (W)", TextColor::WHITE, 2.0);
+	m_attackWord->Set2DPosition(Globals::screenWidth / 2 - 150, Globals::screenHeight * 0.125);
+
+	//item option
+	m_itemWord = std::make_shared<Text>(shader, font, "Item (A)", TextColor::WHITE, 2.0);
+	m_itemWord->Set2DPosition(Globals::screenWidth / 2 - 150, Globals::screenHeight * 0.375);
+
+	//wait option
+	m_waitWord = std::make_shared<Text>(shader, font, "Wait (S)", TextColor::WHITE, 2.0);
+	m_waitWord->Set2DPosition(Globals::screenWidth / 2 - 150, Globals::screenHeight * 0.625);
+
+	//attack option
+	m_openChestWord = std::make_shared<Text>(shader, font, "Open chess (D)", TextColor::WHITE, 2.0);
+	m_openChestWord->Set2DPosition(Globals::screenWidth / 2 - 150, Globals::screenHeight * 0.875);
 }
 
 void GSMap::Exit()
@@ -441,12 +500,18 @@ void GSMap::Update(float deltaTime)
 	m_mapPointer->Set2DPosition(m_mapMatrix[xtemp][ytemp]->GetPosition().x, m_mapMatrix[xtemp][ytemp]->GetPosition().y);
 
 	//text
-	m_debug->SetText(std::to_string(xtemp) + " - " + std::to_string(ytemp));
-	m_infoTile->SetText("Evasion: " + std::to_string(m_mapMatrix[xtemp][ytemp]->getEvasion()));
-	if (m_mapMatrix[xtemp][ytemp]->getCharacter() == nullptr) {
-		m_numMovement->SetText("");
+	//m_debug->SetText(std::to_string(xtemp) + " - " + std::to_string(ytemp));
+	m_infoEvasion->SetText("Evasion: " + std::to_string(m_mapMatrix[xtemp][ytemp]->getEvasion()));
+	m_infoSquareType->SetText(m_mapMatrix[xtemp][ytemp]->getMapType());
+	m_infoDef->SetText("Def: " + std::to_string(m_mapMatrix[xtemp][ytemp]->getDefense()));
+	m_infoRes->SetText("Res: " + std::to_string(m_mapMatrix[xtemp][ytemp]->getResistance()));
+
+	if (m_mapMatrix[xtemp][ytemp]->getCharacter() != nullptr) {
+		m_charName->SetText(m_mapMatrix[xtemp][ytemp]->getCharacter()->getCharName());
 	}
-	else m_numMovement->SetText("Move: " + std::to_string(m_mapMatrix[xtemp][ytemp]->getCharacter()->getMove()));
+	else {
+		m_charName->SetText("");
+	}
 
 	for (auto it : m_listAnimation)
 	{
@@ -514,9 +579,25 @@ void GSMap::Draw()
 	{
 		it->Draw();
 	}*/
-	m_debug->Draw();
-	m_numMovement->Draw();
-	m_infoTile->Draw();
+	//m_debug->Draw();
+	//m_numMovement->Draw();
+	mapsquareInfoBox->Draw();
+	m_infoEvasion->Draw();
+	m_infoDef->Draw();
+	m_infoRes->Draw();
+	m_infoSquareType->Draw();
+
+	characterNameBox->Draw();
+	m_charName->Draw();
+
+	if (currentState == 2) {
+		if (!m_chosenCharacter->getDisableButton()) {
+			attackOption->Draw(); m_attackWord->Draw();
+			itemOption->Draw(); m_itemWord->Draw();
+			waitOption->Draw(); m_waitWord->Draw();
+			openChestOption->Draw(); m_openChestWord->Draw();
+		}
+	}
 	for (auto it : m_listButton)
 	{
 		it->Draw();

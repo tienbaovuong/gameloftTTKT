@@ -8,6 +8,7 @@ Chess::Chess(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::
 	this->m_resistance = 0;
 	this->m_maptype = "Chess";
 	this->isPassable = true;
+	this->isChess = true;
 }
 
 Chess::~Chess()

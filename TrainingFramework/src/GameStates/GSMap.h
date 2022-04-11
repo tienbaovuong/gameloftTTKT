@@ -48,9 +48,25 @@ private:
 
  	//0 = normal map state, 1 = character moving state, 2 = character pick action, 3 = choose target, 4 = enemy turn
 	GLint currentState = 0;
+	
+	//box
+	std::shared_ptr <Sprite2D> mapsquareInfoBox;
+	std::shared_ptr <Sprite2D> characterNameBox;
+	std::shared_ptr <Sprite2D> attackOption;
+	std::shared_ptr <Sprite2D> itemOption;
+	std::shared_ptr <Sprite2D> waitOption;
+	std::shared_ptr <Sprite2D> openChestOption;
 
 	//text
-	std::shared_ptr<Text>		m_infoTile;
+	std::shared_ptr<Text>		m_infoEvasion;
+	std::shared_ptr<Text>		m_infoSquareType;
+	std::shared_ptr<Text>		m_infoDef;
+	std::shared_ptr<Text>		m_infoRes;
+	std::shared_ptr<Text>		m_charName;
+	std::shared_ptr<Text>		m_attackWord;
+	std::shared_ptr<Text>		m_itemWord;
+	std::shared_ptr<Text>		m_waitWord;
+	std::shared_ptr<Text>		m_openChestWord;
 	std::shared_ptr<Text>		m_debug;
 	std::shared_ptr<Text>		m_numMovement;
 	

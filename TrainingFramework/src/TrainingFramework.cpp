@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "utilities.h" 
 
-int Globals::screenWidth = 770;
+int Globals::screenWidth = 1050;
 int Globals::screenHeight = 770;
 int Globals::squareLength = 70;
 int Globals::gameLevel = 0;

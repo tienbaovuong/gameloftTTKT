@@ -4,10 +4,17 @@
 LevelZero::LevelZero()
 	:LevelBase()
 {
+	//x and y
+	startXPointer = 9;
+	startYPointer = 19;
+	xOffset = 2;
+	yOffset = 9;
+
 	//allies
-	ike = std::make_shared<Ike>(2, 0); ike->setPosXY(9, 18);
-	dorcas = std::make_shared<Dorcas>(2, 0); dorcas->setPosXY(9, 19);
+	ike = std::make_shared<Ike>(2, 0); ike->setPosXY(9, 19);
+	dorcas = std::make_shared<Dorcas>(2, 0); dorcas->setPosXY(9, 18);
 	serra = std::make_shared<Serra>(1, 0); serra->setPosXY(11, 13);
+	serra->setCharName("???");
 	m_alliesList.push_back(ike);
 	m_alliesList.push_back(dorcas);
 	m_alliesList.push_back(serra);

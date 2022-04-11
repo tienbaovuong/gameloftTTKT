@@ -7,6 +7,8 @@ AssetManager::AssetManager()
 	shaderTexture = ResourceManagers::GetInstance()->GetShader("TextureShader");
 	shaderAnimation = ResourceManagers::GetInstance()->GetShader("Animation");
 	shaderText = ResourceManagers::GetInstance()->GetShader("TextShader");
+	//brown box
+	brownBox = ResourceManagers::GetInstance()->GetTexture("brown_box.tga");
 
 	//Ike
 	IkeField = ResourceManagers::GetInstance()->GetTexture("character sprites/IkeField.tga");

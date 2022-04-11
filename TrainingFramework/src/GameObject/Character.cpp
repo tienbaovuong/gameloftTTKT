@@ -128,6 +128,11 @@ std::string Character::getCharName()
     return this->m_name;
 }
 
+void Character::setCharName(std::string name)
+{
+    this->m_name = name;
+}
+
 bool Character::isEnemy()
 {
     return this->m_isEnemy;

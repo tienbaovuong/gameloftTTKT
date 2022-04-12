@@ -6,6 +6,7 @@
 #include "GSIntro.h"
 #include "GSMenu.h"
 #include "GSMap.h"
+#include "GSBattle.h"
 #include "GameStatebase.h"
 
 
@@ -30,6 +31,9 @@ std::shared_ptr<GameStateBase> GameStateBase::CreateState(StateType stt)
 		break;
 	case StateType:: STATE_MAP:
 		gs = std::make_shared<GSMap>();
+		break;
+	case StateType:: STATE_BATTLE:
+		gs = std::make_shared<GSBattle>();
 		break;
 	default:
 		break;

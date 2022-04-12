@@ -23,6 +23,7 @@ public:
 
 	void setPosXY(GLint x, GLint y, GLint xOffset, GLint yOffset);
 	void setDrawPos(GLint x, GLint y);
+	bool isChess;
 
 protected:
 	GLint m_posX;
@@ -33,5 +34,4 @@ protected:
 	std::string m_maptype;
 	std::shared_ptr<Character> character;
 	bool isPassable;
-	bool isChess;
 };

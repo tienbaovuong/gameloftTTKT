@@ -279,6 +279,66 @@ MoveList** Character::getMovementMap()
     return this->m_movementMap;
 }
 
+GLint Character::getLevel()
+{
+    return this->m_level;
+}
+
+GLint Character::getExp()
+{
+    return this->m_exp;
+}
+
+GLint Character::getHealthPoint()
+{
+    return this->m_healthPoint;
+}
+
+GLint Character::getMaxHealth()
+{
+    return this->m_maxHealthPoint;
+}
+
+GLint Character::getStrength()
+{
+    return this->m_strength;
+}
+
+GLint Character::getMagic()
+{
+    return this->m_magic;
+}
+
+GLint Character::getDef()
+{
+    return this->m_defense;
+}
+
+GLint Character::getRes()
+{
+    return this->m_resistance;
+}
+
+GLint Character::getPower()
+{
+    return this->getPower();
+}
+
+GLint Character::getHitRate()
+{
+    return this->m_hitRate;
+}
+
+GLint Character::getEvasion()
+{
+    return this->m_evasion;
+}
+
+GLint Character::getCritRate()
+{
+    return this->m_critRate;
+}
+
 
 
 MoveList::MoveList(GLint x, GLint y, GLint move, GLint preX, GLint preY, bool mark)

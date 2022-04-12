@@ -1,5 +1,6 @@
 #include "AssetManager.h"
 #include "GameManager/ResourceManagers.h"
+#include "Character.h"
 
 AssetManager::AssetManager()
 {
@@ -24,6 +25,9 @@ AssetManager::AssetManager()
 
 	//Enemy Bandit Leader
 	EnemyBanditLeaderField = ResourceManagers::GetInstance()->GetTexture("character sprites/EnemyBanditLeaderField.tga");
+
+	battler1 = std::make_shared<Character>();
+	battler2 = std::make_shared<Character>();
 }
 
 AssetManager::~AssetManager()

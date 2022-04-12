@@ -17,7 +17,7 @@
 #include "MapTile/MapTileHeader.h"
 
 GSMap::GSMap()
-	: currentState(0)
+	: currentState(0), GameStateBase(StateType::STATE_MAP)
 {
 	m_mapMatrix = new std::shared_ptr<MapSquare>* [Globals::mapWidth];
 	for (int i = 0; i < Globals::mapWidth; i++) {
@@ -339,7 +339,9 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 		{
 		case KEY_MOVE_LEFT:
 			if (currentState == 2) {
+				//item page
 				if (m_chosenCharacter->getDisableButton()) break;
+				m_chosenCharacter->setFinishTurn(true);
 				currentState = 0;
 				break;
 			}
@@ -363,8 +365,15 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 			break;
 		case KEY_MOVE_BACKWORD:
 			if (currentState == 2) {
+				//wait command
 				if (m_chosenCharacter->getDisableButton()) break;
-				m_mapMatrix[xtemp][ytemp]->getCharacter()->setFinishTurn(true);
+				m_chosenCharacter->setFinishTurn(true);
+				if (checkEndTurn()) {
+					currentState = 4;
+					enemyTurn();
+				}
+				else currentState = 0;
+				break;
 				break;
 			}
 		case KEY_DOWN:
@@ -384,9 +393,16 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 			//m_mapPointer->Set2DPosition(m_mapMatrix[xtemp][ytemp]->GetPosition().x, m_mapMatrix[xtemp][ytemp]->GetPosition().y);
 			break;
 		case KEY_MOVE_RIGHT:
-			if (currentState == 2) {
+			if (currentState == 2 && m_mapMatrix[xtemp][ytemp]->isChess) {
+				//open chess
 				if (m_chosenCharacter->getDisableButton()) break;
+				m_chosenCharacter->setFinishTurn(true);
 				currentState = 0;
+				if (checkEndTurn()) {
+					currentState = 4;
+					enemyTurn();
+				}
+				else currentState = 0;
 				break;
 			}
 		case KEY_RIGHT:
@@ -407,6 +423,7 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 			break;
 		case KEY_MOVE_FORWORD:
 			if (currentState == 2) {
+				//attack command
 				if (m_chosenCharacter->getDisableButton()) break;
 				m_chosenCharacter->calculateAttackMap(m_mapMatrix);
 				currentState = 3;
@@ -460,12 +477,16 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 			case 2:
 				break;
 			case 3:
-				m_mapMatrix[xtemp][ytemp]->getCharacter()->setFinishTurn(true);
-				if (checkEndTurn()) {
-					currentState = 4;
-					enemyTurn();
+				if (m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter() != nullptr) {
+					if (m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter()->isEnemy() && m_chosenCharacter->getMovementMap()[m_mapPointer->getPosX()][m_mapPointer->getPosY()].atkMark) {
+						m_chosenCharacter->setFinishTurn(true);
+						if (checkEndTurn()) {
+							currentState = 4;
+							enemyTurn();
+						}
+						else currentState = 0;
+					}
 				}
-				else currentState = 0;
 				break;
 			}
 
@@ -626,7 +647,9 @@ void GSMap::Draw()
 			attackOption->Draw(); m_attackWord->Draw();
 			itemOption->Draw(); m_itemWord->Draw();
 			waitOption->Draw(); m_waitWord->Draw();
-			openChestOption->Draw(); m_openChestWord->Draw();
+			if (m_mapMatrix[m_chosenCharacter->getPosX()][m_chosenCharacter->getPosY()]->isChess) {
+				openChestOption->Draw(); m_openChestWord->Draw();
+			}
 		}
 	}
 	for (auto it : m_listButton)

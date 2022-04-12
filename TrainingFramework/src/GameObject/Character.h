@@ -64,6 +64,21 @@ public:
     void calculateAttackMap(std::shared_ptr<MapSquare>** mapMatrix);
     MoveList** getMovementMap();
 
+    GLint getLevel();
+    GLint getExp();
+    GLint getHealthPoint();
+    GLint getMaxHealth();
+    GLint getStrength();
+    GLint getMagic();
+    GLint getDef();
+    GLint getRes();
+
+    GLint getPower();
+    GLint getHitRate();
+    GLint getEvasion();
+    GLint getCritRate();
+
+
 protected:
     std::string m_name;
     std::list<std::shared_ptr<Item>> m_itemList;

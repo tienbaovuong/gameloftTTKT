@@ -171,6 +171,9 @@
     <ClCompile Include="CharacterBase.cpp">
       <Filter>TrainingFramework\src\GameObject\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameStates\GSBattle.cpp">
+      <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -328,6 +331,9 @@
     </ClInclude>
     <ClInclude Include="src\GameObject\Character\CharacterBase.h">
       <Filter>TrainingFramework\src\GameObject\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameStates\GSBattle.h">
+      <Filter>TrainingFramework\src\GameStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

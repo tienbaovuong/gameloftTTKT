@@ -4,6 +4,7 @@
 class Model;
 class Shader;
 class Texture;
+class Character;
 class AssetManager : public CSingleton<AssetManager>
 {
 public:
@@ -30,5 +31,9 @@ public:
 
 	//Enemy Bandit Leader
 	std::shared_ptr<Texture> AssetManager::EnemyBanditLeaderField;
+
+	std::shared_ptr<Character> AssetManager::battler1;
+	std::shared_ptr<Character> AssetManager::battler2;
+	GLint eva1, def1, res1, eva2, def2, res2;
 };
 

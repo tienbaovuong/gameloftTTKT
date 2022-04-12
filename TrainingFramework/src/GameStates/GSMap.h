@@ -29,6 +29,7 @@ public:
 	void	Update(float deltaTime) override;
 	void	Draw() override;
 	
+	void	Battle(std::shared_ptr<Character>);
 	void	GameOver();
 	bool	checkEndTurn();
 	void	enemyTurn();

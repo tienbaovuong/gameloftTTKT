@@ -3,6 +3,7 @@
 #include "utilities.h"
 #include <Character.h>
 #include "Character/CharacterHeader.h"
+#include "Items/ItemHeader.h"
 //class Character;
 class Ally;
 class Enemy;

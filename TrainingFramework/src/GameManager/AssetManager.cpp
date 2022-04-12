@@ -42,6 +42,8 @@ AssetManager::AssetManager()
 
 	battler1 = std::make_shared<Character>();
 	battler2 = std::make_shared<Character>();
+
+	escapeBattle = false;
 }
 
 AssetManager::~AssetManager()

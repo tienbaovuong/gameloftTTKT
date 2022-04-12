@@ -49,5 +49,6 @@ public:
 	std::shared_ptr<Character> AssetManager::battler1;
 	std::shared_ptr<Character> AssetManager::battler2;
 	GLint eva1, def1, res1, eva2, def2, res2;
+	bool escapeBattle;
 };
 

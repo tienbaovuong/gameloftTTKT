@@ -1,17 +1,26 @@
 #pragma once
-#include "Sprite2D.h"
+#include "Items/ItemBase.h"
 #include "Character.h"
 #include <string>
 class Character;
-class Item: public Sprite2D
+class Item: public ItemBase
 {
 public:
-	Item() : Sprite2D(), m_minRange(1), m_maxRange(1), m_durability(0), m_power(0), m_type("unknown"), m_hitRate(100), m_critRate(100) {}
-	Item(std::shared_ptr<Model> model, std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture);
+	Item() : ItemBase(), m_minRange(1), m_maxRange(1), m_durability(20),m_maxDurability(20), m_power(0), m_type("unknown"), m_hitRate(0), m_critRate(0) {}
+	Item(GLint durability);
 	~Item();
 	
-	virtual bool isTargettable(Character user, Character other) = 0;
-	virtual void effect(Character user, Character other) = 0;
+	void effect(std::shared_ptr<Character> other) override;
+
+	GLint getMaxRange();
+	GLint getMinRange();
+	std::string getDescription();
+	std::string getItemName();
+	GLint getDurability();
+	GLint getMaxDurability();
+	GLint getPower();
+	GLint getHitRate();
+	GLint getCritRate();
 	void reduceDurability(GLint duraLost);
 	std::string getType();
 
@@ -19,9 +28,12 @@ protected:
 	GLint m_minRange;
 	GLint m_maxRange;
 	GLint m_durability;
+	GLint m_maxDurability;
 	GLint m_power;
 	std::string m_type;
+	std::string m_name;
 	GLint m_hitRate;
 	GLint m_critRate;
+	std::string m_description;
 };
 

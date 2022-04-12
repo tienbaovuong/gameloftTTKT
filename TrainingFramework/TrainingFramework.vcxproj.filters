@@ -174,6 +174,33 @@
     <ClCompile Include="src\GameObject\CharacterBase.cpp">
       <Filter>TrainingFramework\src\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\Items\ItemBase.cpp">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Items\Consumable.cpp">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Items\Food.cpp">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Items\Sword.cpp">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Items\Staffs.cpp">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Items\Axe.cpp">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Items\IronSword.cpp">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Items\IronAxe.cpp">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\Items\HealingStaff.cpp">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -334,6 +361,36 @@
     </ClInclude>
     <ClInclude Include="src\GameObject\CharacterBase.h">
       <Filter>TrainingFramework\src\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Items\ItemBase.h">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Items\ItemHeader.h">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Items\Consumable.h">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Items\Food.h">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Items\Sword.h">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Items\Staffs.h">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Items\Axe.h">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Items\IronSword.h">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Items\IronAxe.h">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\Items\HealingStaff.h">
+      <Filter>TrainingFramework\src\GameObject\Items</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

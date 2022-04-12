@@ -3,7 +3,7 @@
 
 Character::Character(GLint level, GLint exp)
     :CharacterBase(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->IkeField), m_name("unknown"), m_level(level),m_exp(exp), m_healthPoint(1), m_strength(0)
-    , m_magic(0), m_defense(0), m_resistance(0), m_movement(5), m_minRange(1), m_maxRange(1), m_characterType("unknown"), m_power(0)
+    , m_magic(0), m_defense(0), m_resistance(0), m_movement(5), m_minRange(1), m_maxRange(1), m_characterType("unknown"), m_power(0), bonusHitRate(0)
     , m_hitRate(100), m_evasion(0), m_critRate(5), m_posX(0), m_posY(0), fieldAnimation(nullptr), m_isFinishTurn(false)
     , m_time(0), m_disableButton(false)
 {
@@ -312,9 +312,12 @@ GLint Character::getHealthPoint()
 
 void Character::setHealthPoint(GLint hp)
 {
-    if (hp < 0) {
+    if (hp <= 0) {
         hp = 0;
         m_isAlive = false;
+    }
+    if (hp > m_maxHealthPoint) {
+        hp = m_maxHealthPoint;
     }
     this->m_healthPoint = hp;
 }
@@ -362,6 +365,62 @@ GLint Character::getEvasion()
 GLint Character::getCritRate()
 {
     return this->m_critRate;
+}
+
+std::shared_ptr<Item> Character::getEquipment()
+{
+    return this->m_equipment;
+}
+
+void Character::equip(std::shared_ptr<Item> equipment)
+{
+    if (this->getEquipment() == nullptr) {
+        if (isEquippable(equipment)) {
+            this->m_equipment = equipment;
+            this->m_hitRate = this->m_hitRate + equipment->getHitRate();
+            this->m_critRate = this->m_critRate + equipment->getCritRate();
+            this->m_power = this->m_power + equipment->getPower();
+        }
+    }
+    else {
+        if (isEquippable(equipment)) {
+            this->m_hitRate = this->m_hitRate + equipment->getHitRate() - this->m_equipment->getHitRate();
+            this->m_critRate = this->m_critRate + equipment->getCritRate() - this->m_equipment->getCritRate();
+            this->m_power = this->m_power + equipment->getPower() - this->m_equipment->getPower();
+            this->m_equipment = equipment;
+        }
+    }
+}
+
+void Character::unequip(std::shared_ptr<Item> equipment)
+{
+    this->m_equipment = nullptr;
+    this->m_hitRate = this->m_hitRate - equipment->getHitRate();
+    this->m_critRate = this->m_critRate - equipment->getCritRate();
+    this->m_power = this->m_power - equipment->getPower();
+}
+
+void Character::use(std::shared_ptr<Item> item, std::shared_ptr<Character> character)
+{
+    item->effect(character);
+}
+
+GLint Character::inventorySpace()
+{
+    int i = 0;
+    for (auto it : m_itemList) {
+        i++;
+    }
+    return i;
+}
+
+bool Character::addItem(std::shared_ptr<Item> item)
+{
+    if (inventorySpace() == 5) return false;
+    else {
+        m_itemList.push_back(item);
+        return true;
+    }
 }
 
 

@@ -53,5 +53,7 @@ private:
 	std::shared_ptr<GameStateBase>				m_pNextState;
 	bool	m_running;
 	bool	m_fullscreen;
+
+
 };
 

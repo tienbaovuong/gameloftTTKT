@@ -17,7 +17,7 @@
 #include "MapTile/MapTileHeader.h"
 
 GSMap::GSMap()
-	: currentState(0)
+	: currentState(0), m_time(0.0)
 {
 	m_mapMatrix = new std::shared_ptr<MapSquare>* [Globals::mapWidth];
 	for (int i = 0; i < Globals::mapWidth; i++) {
@@ -480,14 +480,33 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 				if (m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter() != nullptr) {
 					if (m_chosenCharacter->getMovementMap()[m_mapPointer->getPosX()][m_mapPointer->getPosY()].atkMark) {
 						if(m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter()->isEnemy()) {
+							Battle(m_chosenCharacter, m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter()
+								, m_mapMatrix[m_chosenCharacter->getPosX()][m_chosenCharacter->getPosY()], m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]);
+							if (AssetManager::GetInstance()->escapeBattle) {
+								break;
+							}
 							m_chosenCharacter->setFinishTurn(true);
 							if (checkEndTurn()) {
 								currentState = 4;
 								enemyTurn();
 							}
 							else currentState = 0;
-							Battle(m_chosenCharacter, m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter()
-								, m_mapMatrix[m_chosenCharacter->getPosX()][m_chosenCharacter->getPosY()], m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]);
+						}
+						else {
+							if (m_chosenCharacter->getEquipment()->getType() == "staff") {
+								Battle(m_chosenCharacter, m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter()
+									, m_mapMatrix[m_chosenCharacter->getPosX()][m_chosenCharacter->getPosY()], m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]);
+								if (AssetManager::GetInstance()->escapeBattle) {
+									AssetManager::GetInstance()->escapeBattle = false;
+									break;
+								}
+								m_chosenCharacter->setFinishTurn(true);
+								if (checkEndTurn()) {
+									currentState = 4;
+									enemyTurn();
+								}
+								else currentState = 0;
+							}
 						}
 					}
 				}

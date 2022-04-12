@@ -76,5 +76,6 @@ private:
 	
 	//main character
 	std::shared_ptr<Character> m_mainCharacter;
+	GLfloat m_time;
 };
 

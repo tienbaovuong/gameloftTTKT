@@ -96,7 +96,7 @@ void GSBattle::Init()
 	enterToBegin->Set2DPosition(Globals::screenWidth / 2 - 60, Globals::screenHeight / 3 - 30);
 	
 	if (isAssist) {
-		assistText = std::make_shared<Text>(textShader, font, "Assisting", TextColor::WHITE, 2.0);
+		assistText = std::make_shared<Text>(textShader, font, battler1->getEquipment()->getDescription(), TextColor::WHITE, 2.0);
 		assistText->Set2DPosition(30, Globals::screenHeight / 3.0 + 300);
 	}
 
@@ -171,6 +171,10 @@ void GSBattle::HandleKeyEvents(int key, bool bIsPressed)
 				GameStateMachine::GetInstance()->PopState();
 			}
 			break;
+		case KEY_BACK:
+			if (currentState == 0) {
+				AssetManager::GetInstance()->escapeBattle = true;
+			}
 		default:
 			break;
 		}
@@ -279,6 +283,9 @@ void GSBattle::Draw()
 
 void GSBattle::Prediction()
 {
+	if (isAssist) {
+		return;
+	}
 	if (battler1->isPhysical()) {
 		dmg1 = battler1->getPower() - battler2->getDef() - def2;
 	}
@@ -303,5 +310,9 @@ void GSBattle::Prediction()
 
 bool GSBattle::isAssisting()
 {
+	/*if (battler1->getEquipment()->getType() == "staff") {
+		return true;
+	}
+	else return false;*/
 	return false;
 }

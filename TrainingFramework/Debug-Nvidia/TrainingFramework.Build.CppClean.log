@@ -12,7 +12,6 @@ d:\work related\github\glttkt\trainingframework\debug-nvidia\enemybandit.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\dorcas.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\ally.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\characterbase.obj
-d:\work related\github\glttkt\trainingframework\debug-nvidia\character.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\resourcemanagers.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\assetmanager.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\application.obj
@@ -20,7 +19,6 @@ d:\work related\github\glttkt\trainingframework\debug-nvidia\snowtree.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\enemy.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\edge.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\castle.obj
-d:\work related\github\glttkt\trainingframework\debug-nvidia\gamestatebase.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\texture.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\text.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\spriteanimation.obj
@@ -40,6 +38,7 @@ d:\work related\github\glttkt\trainingframework\debug-nvidia\mapsquare.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\mappointer.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\levelzero.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\levelbase.obj
+d:\work related\github\glttkt\trainingframework\debug-nvidia\itembase.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\swordman.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\trainingframework.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\gsplay.obj
@@ -48,6 +47,16 @@ d:\work related\github\glttkt\trainingframework\debug-nvidia\gsmap.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\gsintro.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\gsbattle.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\gamestatemachine.obj
+d:\work related\github\glttkt\trainingframework\debug-nvidia\gamestatebase.obj
+d:\work related\github\glttkt\trainingframework\debug-nvidia\character.obj
+d:\work related\github\glttkt\trainingframework\debug-nvidia\axe.obj
+d:\work related\github\glttkt\trainingframework\debug-nvidia\sword.obj
+d:\work related\github\glttkt\trainingframework\debug-nvidia\staffs.obj
+d:\work related\github\glttkt\trainingframework\debug-nvidia\ironsword.obj
+d:\work related\github\glttkt\trainingframework\debug-nvidia\ironaxe.obj
+d:\work related\github\glttkt\trainingframework\debug-nvidia\healingstaff.obj
+d:\work related\github\glttkt\trainingframework\debug-nvidia\food.obj
+d:\work related\github\glttkt\trainingframework\debug-nvidia\consumable.obj
 d:\work related\github\glttkt\bin-nvidia\trainingframework.exe
 d:\work related\github\glttkt\trainingframework\debug-nvidia\trainingframework.ilk
 d:\work related\github\glttkt\bin-nvidia\trainingframework.pdb

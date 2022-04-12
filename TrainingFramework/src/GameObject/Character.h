@@ -33,7 +33,7 @@ class Character :
 public:
     Character() : CharacterBase() , m_name("unknown"), m_level(1), m_healthPoint(1), m_strength(0), m_isEnemy(false)
                   , m_magic(0), m_defense(0), m_resistance(0), m_movement(5), m_characterType("unknown"), m_power(0)
-                  , m_hitRate(100), m_evasion(0), m_critRate(5), m_posX(0), m_posY(0), fieldAnimation(nullptr), m_isAlive(true), m_isFinishTurn(false)
+                  , m_hitRate(100), m_evasion(0), m_critRate(5), m_posX(0), m_posY(0), fieldAnimation(nullptr), m_isAlive(true), m_isFinishTurn(false), bonusHitRate(0)
                     , m_movementMap(nullptr), m_time(0), m_disableButton(false) {}
     Character(GLint level, GLint exp);
     ~Character();
@@ -78,14 +78,22 @@ public:
 
     GLint getPower();
     GLint getHitRate();
+    GLint bonusHitRate;
     GLint getEvasion();
     GLint getCritRate();
 
+    std::list<std::shared_ptr<Item>> m_itemList;
+    std::shared_ptr<Item> getEquipment();
+    void equip(std::shared_ptr<Item> equipment);
+    void unequip(std::shared_ptr<Item> equipment);
+    void use(std::shared_ptr<Item> item, std::shared_ptr<Character> character);
+    GLint inventorySpace();
+    bool addItem(std::shared_ptr<Item> item);
 
 protected:
     std::string m_name;
-    std::list<std::shared_ptr<Item>> m_itemList;
     bool m_isEnemy;
+    std::shared_ptr<Item> m_equipment;
 
     //basic stat
     GLint m_level;

@@ -31,6 +31,7 @@ public:
 	
 	void	GameOver();
 	bool	checkEndTurn();
+	void	enemyTurn();
 
 private:
 	std::shared_ptr<MapSquare>**	m_mapMatrix;
@@ -69,6 +70,7 @@ private:
 	std::shared_ptr<Text>		m_openChestWord;
 	std::shared_ptr<Text>		m_debug;
 	std::shared_ptr<Text>		m_numMovement;
+	std::shared_ptr<Text>		m_finishTurnMark;
 	
 	//main character
 	std::shared_ptr<Character> m_mainCharacter;

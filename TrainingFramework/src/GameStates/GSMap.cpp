@@ -306,6 +306,8 @@ void GSMap::Init()
 	//attack option
 	m_openChestWord = std::make_shared<Text>(shader, font, "Open chess (D)", TextColor::WHITE, 2.0);
 	m_openChestWord->Set2DPosition(Globals::screenWidth / 2 - 150, Globals::screenHeight * 0.875);
+
+	m_finishTurnMark = std::make_shared<Text>(shader, font, "Done", TextColor::RED, 1.0);
 }
 
 void GSMap::Exit()
@@ -336,8 +338,13 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 		switch (key)
 		{
 		case KEY_MOVE_LEFT:
+			if (currentState == 2) {
+				if (m_chosenCharacter->getDisableButton()) break;
+				currentState = 0;
+				break;
+			}
 		case KEY_LEFT:
-			if (currentState == 2) break;
+			if (currentState == 2 || currentState == 4) break;
 			//pointer transition
 			if (m_mapPointer->getPosX() == 0) break;
 			m_mapPointer->setPosXY(m_mapPointer->getPosX() - 1, m_mapPointer->getPosY());
@@ -355,8 +362,13 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 
 			break;
 		case KEY_MOVE_BACKWORD:
+			if (currentState == 2) {
+				if (m_chosenCharacter->getDisableButton()) break;
+				m_mapMatrix[xtemp][ytemp]->getCharacter()->setFinishTurn(true);
+				break;
+			}
 		case KEY_DOWN:
-			if (currentState == 2) break;
+			if (currentState == 2 || currentState == 4) break;
 			//pointer transition
 			if (m_mapPointer->getPosY() == Globals::mapHeight-1) break;
 			m_mapPointer->setPosXY(m_mapPointer->getPosX(), m_mapPointer->getPosY()+1);
@@ -372,8 +384,13 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 			//m_mapPointer->Set2DPosition(m_mapMatrix[xtemp][ytemp]->GetPosition().x, m_mapMatrix[xtemp][ytemp]->GetPosition().y);
 			break;
 		case KEY_MOVE_RIGHT:
+			if (currentState == 2) {
+				if (m_chosenCharacter->getDisableButton()) break;
+				currentState = 0;
+				break;
+			}
 		case KEY_RIGHT:
-			if (currentState == 2) break;
+			if (currentState == 2 || currentState == 4) break;
 			//pointer transition
 			if (m_mapPointer->getPosX() == Globals::mapWidth-1) break;
 			m_mapPointer->setPosXY(m_mapPointer->getPosX() + 1, m_mapPointer->getPosY());
@@ -389,8 +406,14 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 			//m_mapPointer->Set2DPosition(m_mapMatrix[xtemp][ytemp]->GetPosition().x, m_mapMatrix[xtemp][ytemp]->GetPosition().y);
 			break;
 		case KEY_MOVE_FORWORD:
+			if (currentState == 2) {
+				if (m_chosenCharacter->getDisableButton()) break;
+				m_chosenCharacter->calculateAttackMap(m_mapMatrix);
+				currentState = 3;
+				break;
+			}
 		case KEY_UP:
-			if (currentState == 2) break;
+			if (currentState == 2 || currentState == 4) break;
 			//pointer transition
 			if (m_mapPointer->getPosY() == 0) break;
 			m_mapPointer->setPosXY(m_mapPointer->getPosX(), m_mapPointer->getPosY() - 1);
@@ -415,6 +438,7 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 				}
 				else {
 					m_chosenCharacter = m_mapMatrix[xtemp][ytemp]->getCharacter();
+					if (m_chosenCharacter->getFinishTurn()) break;
 					m_chosenCharacter->calculateMovementMap(m_mapMatrix);
 					currentState = 1;
 				}
@@ -434,13 +458,13 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 				break;
 
 			case 2:
-				if (m_chosenCharacter->getDisableButton()) break;
-				m_chosenCharacter->calculateAttackMap(m_mapMatrix);
-				currentState = 3;
 				break;
 			case 3:
-				//m_mapMatrix[xtemp][ytemp]->getCharacter()->setFinishTurn(true);
-				if (checkEndTurn()) currentState = 4;
+				m_mapMatrix[xtemp][ytemp]->getCharacter()->setFinishTurn(true);
+				if (checkEndTurn()) {
+					currentState = 4;
+					enemyTurn();
+				}
 				else currentState = 0;
 				break;
 			}
@@ -568,6 +592,13 @@ void GSMap::Draw()
 	for (auto it : m_listCharacter)
 	{
 		it->getFieldAnimation()->Draw();
+		if (it->getFinishTurn()) {
+			//printf("yes");
+			//printf("%d - %d \n", it->GetPosition().x, it->GetPosition().y);
+			int x = it->getPosX(); int y = it->getPosY();
+			m_finishTurnMark->Set2DPosition(m_mapMatrix[x][y]->GetPosition().x - 25, m_mapMatrix[x][y]->GetPosition().y);
+			m_finishTurnMark->Draw();
+		}
 	}
 	for (auto it : m_listEnemy)
 	{
@@ -624,5 +655,13 @@ bool GSMap::checkEndTurn()
 			return false;
 	}
 	return true;
+}
+
+void GSMap::enemyTurn()
+{
+	for (auto it : m_listCharacter) {
+		it->setFinishTurn(false);
+	}
+	currentState = 0;
 }
 

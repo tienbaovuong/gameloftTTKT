@@ -17,6 +17,10 @@ public:
 	std::shared_ptr<Shader> AssetManager::shaderText;
 	//brown box
 	std::shared_ptr<Texture> AssetManager::brownBox;
+	//battle
+	std::shared_ptr<Texture> AssetManager::slashAnimation;
+	std::shared_ptr<Texture> AssetManager::healAnimation;
+
 	//Ike
 	std::shared_ptr<Texture> AssetManager::IkeField;
 	std::shared_ptr<Texture> AssetManager::IkeFace;

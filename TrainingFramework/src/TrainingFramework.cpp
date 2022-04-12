@@ -52,7 +52,7 @@ GLint _tmain(GLint argc, _TCHAR* argv[])
 {
 	ESContext esContext;
 	esInitContext(&esContext);
-	esCreateWindow(&esContext, "Ice Emblem", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
+	esCreateWindow(&esContext, "Ice Emblem v1.0", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
 	if (Init(&esContext) != 0)
 		return 0;
 	

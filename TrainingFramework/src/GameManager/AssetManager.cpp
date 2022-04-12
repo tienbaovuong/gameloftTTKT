@@ -11,6 +11,10 @@ AssetManager::AssetManager()
 	//brown box
 	brownBox = ResourceManagers::GetInstance()->GetTexture("brown_box.tga");
 
+	//battle
+	slashAnimation = ResourceManagers::GetInstance()->GetTexture("BattleAnimation/SlashAnimation.tga");
+	healAnimation = ResourceManagers::GetInstance()->GetTexture("BattleAnimation/HealAnimation.tga");
+
 	//Ike
 	IkeField = ResourceManagers::GetInstance()->GetTexture("character sprites/IkeField.tga");
 	IkeFace = ResourceManagers::GetInstance()->GetTexture("character sprites/IkeFace.tga");

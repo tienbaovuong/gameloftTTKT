@@ -69,6 +69,7 @@ public:
     GLint getLevel();
     GLint getExp();
     GLint getHealthPoint();
+    void  setHealthPoint(GLint hp);
     GLint getMaxHealth();
     GLint getStrength();
     GLint getMagic();

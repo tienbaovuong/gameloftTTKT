@@ -3,6 +3,7 @@
 
 class Character;
 class Sprite2D;
+class SpriteAnimation;
 class Text;
 class GameButton;
 class GSBattle :
@@ -26,7 +27,7 @@ public:
 	void	Draw() override;
 
 	void	Prediction();
-
+	bool	isAssisting();
 	std::shared_ptr<Character> battler1, battler2;
 	GLint eva1, def1, res1, eva2, def2, res2;
 
@@ -42,6 +43,9 @@ private:
 	std::shared_ptr<Text> prediction;
 	std::shared_ptr<Text> lvl1, lvl2, exp1, exp2;
 
+	std::shared_ptr<Text> numbers;
+	std::shared_ptr<Text> hitStatus;
+
 	GLint dmg1;
 	GLint hit1;
 	GLint crit1;
@@ -49,7 +53,13 @@ private:
 	GLint hit2;
 	GLint crit2;
 
-	//0 = prediction, 1 = battler1 act, 2 = battler2 act, 3 = gain exp
+	//0 = prediction, 1 = battler1 act, 2 = battler2 act, 3 = gain exp, 4 = press enter to end state
 	GLint currentState;
+	GLfloat m_time;
+	bool isAssist;
+	std::shared_ptr<Text> assistText;
+
+	std::shared_ptr<SpriteAnimation> slashAni;
+	std::shared_ptr<SpriteAnimation> healAni;
 };
 

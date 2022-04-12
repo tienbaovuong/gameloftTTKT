@@ -14,5 +14,5 @@ tileset:
 
 character:
 	https://www.deviantart.com/elementalworks/art/Ike-RPG-Maker-VX-Overworld-556087753
-	RPG Maker VX Ace character maker
+	RPG Maker VX Ace assets
 	https://fireemblem.fandom.com/wiki/Fire_Emblem_Wiki

@@ -1,6 +1,8 @@
 #include "GSBattle.h"
 #include "Character.h"
+#include "SpriteAnimation.h"
 #include "Font.h"
+#include <ctime>
 GSBattle::GSBattle()
 {
 }
@@ -11,7 +13,10 @@ GSBattle::~GSBattle()
 
 void GSBattle::Init()
 {
+	//so many text aaaaaaaaaaaaaaaaaaaaaaa
+	std::srand(std::time(0));
 	currentState = 0;
+	m_time = 0;
 	battler1 = AssetManager::GetInstance()->battler1;
 	battler2 = AssetManager::GetInstance()->battler2;
 	eva1 = AssetManager::GetInstance()->eva1;
@@ -20,6 +25,12 @@ void GSBattle::Init()
 	eva2 = AssetManager::GetInstance()->eva2;
 	def2 = AssetManager::GetInstance()->def2;
 	res2 = AssetManager::GetInstance()->res2;
+	isAssist = isAssisting();
+	slashAni = std::make_shared<SpriteAnimation>(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderAnimation, AssetManager::GetInstance()->slashAnimation, 5, 1, 0, 0.2);
+	slashAni->SetSize(2*Globals::screenHeight / 3, 2*Globals::screenHeight / 3);
+	slashAni->Set2DPosition(Globals::screenWidth - Globals::screenHeight / 6.0, Globals::screenHeight / 6.0);
+	healAni = std::make_shared<SpriteAnimation>(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderAnimation, AssetManager::GetInstance()->healAnimation, 5, 1, 0, 0.2);
+	healAni->SetSize(2*Globals::screenHeight / 3, 2*Globals::screenHeight / 3);
 
 	background = std::make_shared<Sprite2D>(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->brownBox);
 	box1 = std::make_shared<Sprite2D>(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->brownBox);
@@ -83,6 +94,11 @@ void GSBattle::Init()
 
 	enterToBegin = std::make_shared<Text>(textShader, font, "Enter to start", TextColor::WHITE, 1.0);
 	enterToBegin->Set2DPosition(Globals::screenWidth / 2 - 60, Globals::screenHeight / 3 - 30);
+	
+	if (isAssist) {
+		assistText = std::make_shared<Text>(textShader, font, "Assisting", TextColor::WHITE, 2.0);
+		assistText->Set2DPosition(30, Globals::screenHeight / 3.0 + 300);
+	}
 
 	hp1 = std::make_shared<Text>(textShader, font, "", TextColor::WHITE, 2.0);
 	hp1->Set2DPosition(Globals::screenHeight / 3 + 60, 100);
@@ -102,6 +118,11 @@ void GSBattle::Init()
 	text->Set2DPosition(Globals::screenWidth - Globals::screenHeight / 6.0 - 200, 200);
 	fixedText.push_back(text);
 
+	numbers = std::make_shared<Text>(textShader, font, "" , TextColor::RED, 2.0);
+	numbers->Set2DPosition(Globals::screenWidth - Globals::screenHeight / 6.0 - 50, Globals::screenHeight / 6.0);
+
+	hitStatus = std::make_shared<Text>(textShader, font, "", TextColor::RED, 2.0);
+	hitStatus->Set2DPosition(Globals::screenWidth - Globals::screenHeight / 6.0 - 50, Globals::screenHeight / 6.0 + 50);
 }
 
 void GSBattle::Exit()
@@ -125,7 +146,32 @@ void GSBattle::HandleKeyEvents(int key, bool bIsPressed)
 	if (bIsPressed) {
 		switch (key) {
 		case KEY_ENTER:
-			GameStateMachine::GetInstance()->PopState();
+			if (currentState == 0) {
+				currentState = 1;
+				int random = rand() % 100 + 1;
+				if (hit1 < random) {
+					numbers->SetText("");
+					hitStatus->SetText("Miss");
+				}
+				else {
+					random = rand() % 100 + 1;
+					if (crit1 >= random) {
+						hitStatus->SetText("Crititcal");
+						numbers->SetText(std::to_string(dmg1 * 2));
+						battler2->setHealthPoint(battler2->getHealthPoint() - dmg1 * 2);
+					}
+					else {
+						hitStatus->SetText("Hit");
+						numbers->SetText(std::to_string(dmg1));
+						battler2->setHealthPoint(battler2->getHealthPoint() - dmg1);
+					}
+				}
+			}
+			else if (currentState == 4) {
+				GameStateMachine::GetInstance()->PopState();
+			}
+			break;
+		default:
 			break;
 		}
 	}
@@ -145,6 +191,62 @@ void GSBattle::Update(float deltaTime)
 	hp2->SetText(std::to_string(battler2->getHealthPoint()));
 	lvl1->SetText("Lvl: "+std::to_string(battler1->getLevel()));
 	exp1->SetText("Exp: "+std::to_string(battler2->getExp()));
+
+	switch (currentState) {
+	case 1:
+		m_time += deltaTime;
+		if (isAssist) healAni->Update(deltaTime);
+		else slashAni->Update(deltaTime);
+
+		if (m_time > 1.0) {
+			m_time = 0;
+			if (!battler2->getAlive() || isAssist) currentState = 3;
+			else {
+				currentState = 2;
+				slashAni->Set2DPosition(Globals::screenHeight / 6.0, Globals::screenHeight / 6.0);
+				numbers->Set2DPosition(Globals::screenHeight / 6.0 - 50, Globals::screenHeight / 6.0);
+				hitStatus->Set2DPosition(Globals::screenHeight / 6.0 - 50, Globals::screenHeight / 6.0 + 50);
+				int random = rand() % 100 + 1;
+				if (hit2 < random) {
+					numbers->SetText("");
+					hitStatus->SetText("Miss");
+				}
+				else {
+					random = rand() % 100 + 1;
+					//printf("%d - %d", crit2, random);
+					if (crit2 >= random) {
+						hitStatus->SetText("Crititcal");
+						numbers->SetText(std::to_string(dmg2 * 2));
+						battler1->setHealthPoint(battler1->getHealthPoint() - dmg2 * 2);
+					}
+					else {
+						hitStatus->SetText("Hit");
+						numbers->SetText(std::to_string(dmg2));
+						battler1->setHealthPoint(battler1->getHealthPoint() - dmg2);
+					}
+				}
+			}
+		}
+		break;
+	case 2:
+		m_time += deltaTime;
+		slashAni->Update(deltaTime);
+
+		if (m_time > 1.0) {
+			m_time = 0;
+			currentState = 3;
+		}
+		break;
+
+	case 3:
+		m_time += deltaTime;
+		if (m_time > 1.0) {
+			m_time = 0;
+			currentState = 4;
+		}
+	default:
+		break;
+	}
 }
 
 void GSBattle::Draw()
@@ -164,6 +266,14 @@ void GSBattle::Draw()
 	if (currentState == 0) {
 		prediction->Draw();
 		enterToBegin->Draw();
+	}
+	else if (currentState == 1 || currentState == 2) {
+		if (isAssist) healAni->Draw();
+		else {
+			slashAni->Draw();
+			numbers->Draw();
+			hitStatus->Draw();
+		}
 	}
 }
 
@@ -189,4 +299,9 @@ void GSBattle::Prediction()
 
 	crit1 = battler1->getCritRate();
 	crit2 = battler2->getCritRate();
+}
+
+bool GSBattle::isAssisting()
+{
+	return false;
 }

@@ -11,6 +11,7 @@ d:\work related\github\glttkt\trainingframework\debug-nvidia\enemybanditheader.o
 d:\work related\github\glttkt\trainingframework\debug-nvidia\enemybandit.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\dorcas.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\ally.obj
+d:\work related\github\glttkt\trainingframework\debug-nvidia\characterbase.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\character.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\resourcemanagers.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\assetmanager.obj
@@ -18,7 +19,6 @@ d:\work related\github\glttkt\trainingframework\debug-nvidia\application.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\snowtree.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\enemy.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\edge.obj
-d:\work related\github\glttkt\trainingframework\debug-nvidia\characterbase.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\castle.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\gamestatebase.obj
 d:\work related\github\glttkt\trainingframework\debug-nvidia\texture.obj

@@ -310,6 +310,15 @@ GLint Character::getHealthPoint()
     return this->m_healthPoint;
 }
 
+void Character::setHealthPoint(GLint hp)
+{
+    if (hp < 0) {
+        hp = 0;
+        m_isAlive = false;
+    }
+    this->m_healthPoint = hp;
+}
+
 GLint Character::getMaxHealth()
 {
     return this->m_maxHealthPoint;

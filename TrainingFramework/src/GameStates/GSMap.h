@@ -29,7 +29,8 @@ public:
 	void	Update(float deltaTime) override;
 	void	Draw() override;
 	
-	void	Battle(std::shared_ptr<Character>);
+	bool	CheckHealer();
+	void	Battle(std::shared_ptr<Character> battler1, std::shared_ptr<Character> battle2, std::shared_ptr<MapSquare> square1, std::shared_ptr<MapSquare> square2);
 	void	GameOver();
 	bool	checkEndTurn();
 	void	enemyTurn();

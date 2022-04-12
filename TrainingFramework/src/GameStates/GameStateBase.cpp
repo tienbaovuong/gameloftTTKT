@@ -29,10 +29,10 @@ std::shared_ptr<GameStateBase> GameStateBase::CreateState(StateType stt)
 	case StateType::STATE_PLAY:
 		gs = std::make_shared<GSPlay>();
 		break;
-	case StateType:: STATE_MAP:
+	case StateType::STATE_MAP:
 		gs = std::make_shared<GSMap>();
 		break;
-	case StateType:: STATE_BATTLE:
+	case StateType::STATE_BATTLE:
 		gs = std::make_shared<GSBattle>();
 		break;
 	default:

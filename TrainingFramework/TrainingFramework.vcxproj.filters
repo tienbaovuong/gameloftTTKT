@@ -168,11 +168,11 @@
     <ClCompile Include="src\GameObject\Character\Serra.cpp">
       <Filter>TrainingFramework\src\GameObject\Characters</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterBase.cpp">
-      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameStates\GSBattle.cpp">
       <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\CharacterBase.cpp">
+      <Filter>TrainingFramework\src\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -329,11 +329,11 @@
     <ClInclude Include="src\GameObject\Character\Serra.h">
       <Filter>TrainingFramework\src\GameObject\Characters</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\Character\CharacterBase.h">
-      <Filter>TrainingFramework\src\GameObject\Characters</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameStates\GSBattle.h">
       <Filter>TrainingFramework\src\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\CharacterBase.h">
+      <Filter>TrainingFramework\src\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

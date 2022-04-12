@@ -3,6 +3,8 @@
 Ike::Ike(GLint level, GLint exp)
 	:SwordMan(level, exp)
 {
+	this->SetTexture(AssetManager::GetInstance()->IkeFace);
+	this->secondFace = std::make_shared<Sprite2D>(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->IkeFace2);
 	this->m_name = "Ike";
 	this->m_maxHealthPoint = 1;
 	this->m_strength = 1;

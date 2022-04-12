@@ -3,6 +3,8 @@
 Dorcas::Dorcas(GLint level, GLint exp)
 	:Warrior(level, exp)
 {
+	this->SetTexture(AssetManager::GetInstance()->DorcasFace);
+	this->secondFace = std::make_shared<Sprite2D>(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->DorcasFace2);
 	this->m_name = "Dorcas";
 	this->m_maxHealthPoint = 1;
 	this->m_strength = 1;
@@ -17,6 +19,7 @@ Dorcas::Dorcas(GLint level, GLint exp)
 	this->m_resGrwth = 0;
 	calculateStat();
 	this->fieldAnimation = std::make_shared<SpriteAnimation>(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderAnimation, AssetManager::GetInstance()->DorcasField, 3, 4, 0, 0.3f);
+	
 }
 
 Dorcas::~Dorcas()

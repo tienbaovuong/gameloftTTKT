@@ -3,6 +3,8 @@
 EnemyBandit::EnemyBandit(GLint level, GLint exp)
 	:Enemy(level, exp)
 {
+	this->SetTexture(AssetManager::GetInstance()->BanditFace);
+	this->secondFace = std::make_shared<Sprite2D>(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->BanditFace2);
 	this->m_name = "Bandit";
 	this->m_maxHealthPoint = 1;
 	this->m_strength = 1;

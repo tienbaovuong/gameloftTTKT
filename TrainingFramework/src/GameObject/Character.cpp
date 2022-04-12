@@ -2,8 +2,8 @@
 #include <queue>
 
 Character::Character(GLint level, GLint exp)
-    :Sprite2D(-1, AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->IkeField), m_name("unknown"), m_level(level),m_exp(exp), m_healthPoint(1), m_strength(0)
-    , m_magic(0), m_defense(0), m_resistance(0), m_movement(5), m_minRange(1), m_maxRange(2), m_characterType("unknown"), m_power(0)
+    :CharacterBase(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->IkeField), m_name("unknown"), m_level(level),m_exp(exp), m_healthPoint(1), m_strength(0)
+    , m_magic(0), m_defense(0), m_resistance(0), m_movement(5), m_minRange(1), m_maxRange(1), m_characterType("unknown"), m_power(0)
     , m_hitRate(100), m_evasion(0), m_critRate(5), m_posX(0), m_posY(0), fieldAnimation(nullptr), m_isFinishTurn(false)
     , m_time(0), m_disableButton(false)
 {
@@ -76,10 +76,21 @@ void Character::move(GLint x, GLint y)
 void Character::calculateStat()
 {
     this->m_maxHealthPoint = m_maxHealthPoint + m_hpGrwth * m_level;
+    this->m_healthPoint = m_maxHealthPoint;
     this->m_strength = m_strength + m_strGrwth * m_level;
     this->m_defense = m_defense + m_defGrwth * m_level;
     this->m_magic = m_magic + m_magGrwth * m_level;
     this->m_resistance = m_resistance + m_resGrwth * m_level;
+}
+
+bool Character::isEquippable(std::shared_ptr<Item> equipment)
+{
+    return false;
+}
+
+std::shared_ptr<Sprite2D> Character::getSecondFace()
+{
+    return this->secondFace;
 }
 
 std::shared_ptr<SpriteAnimation> Character::getFieldAnimation()
@@ -136,6 +147,11 @@ void Character::setCharName(std::string name)
 bool Character::isEnemy()
 {
     return this->m_isEnemy;
+}
+
+bool Character::isPhysical()
+{
+    return true;
 }
 
 bool Character::getDisableButton()
@@ -321,7 +337,7 @@ GLint Character::getRes()
 
 GLint Character::getPower()
 {
-    return this->getPower();
+    return this->m_power;
 }
 
 GLint Character::getHitRate()

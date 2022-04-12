@@ -8,6 +8,6 @@ public:
     Ally(GLint level, GLint exp);
     ~Ally();
 
-    virtual bool isEquippable(std::shared_ptr<Item> equipment) = 0;
+    //virtual bool isEquippable(std::shared_ptr<Item> equipment) = 0;
 };
 

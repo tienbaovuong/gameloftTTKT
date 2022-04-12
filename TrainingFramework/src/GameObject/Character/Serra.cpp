@@ -3,6 +3,8 @@
 Serra::Serra(GLint level, GLint exp)
 	:Priest(level, exp)
 {
+	this->SetTexture(AssetManager::GetInstance()->SerraFace);
+	this->secondFace = std::make_shared<Sprite2D>(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->SerraFace2);
 	this->m_name = "Serra";
 	this->m_maxHealthPoint = 1;
 	this->m_strength = 1;

@@ -19,18 +19,28 @@ public:
 	std::shared_ptr<Texture> AssetManager::brownBox;
 	//Ike
 	std::shared_ptr<Texture> AssetManager::IkeField;
+	std::shared_ptr<Texture> AssetManager::IkeFace;
+	std::shared_ptr<Texture> AssetManager::IkeFace2;
 
 	//Dorcas
 	std::shared_ptr<Texture> AssetManager::DorcasField;
+	std::shared_ptr<Texture> AssetManager::DorcasFace;
+	std::shared_ptr<Texture> AssetManager::DorcasFace2;
 
 	//Serra
 	std::shared_ptr<Texture> AssetManager::SerraField;
+	std::shared_ptr<Texture> AssetManager::SerraFace;
+	std::shared_ptr<Texture> AssetManager::SerraFace2;
 
 	//Enemy Bandit
 	std::shared_ptr<Texture> AssetManager::EnemyBanditField;
+	std::shared_ptr<Texture> AssetManager::BanditFace;
+	std::shared_ptr<Texture> AssetManager::BanditFace2;
 
 	//Enemy Bandit Leader
 	std::shared_ptr<Texture> AssetManager::EnemyBanditLeaderField;
+	std::shared_ptr<Texture> AssetManager::BanditLeaderFace;
+	std::shared_ptr<Texture> AssetManager::BanditLeaderFace2;
 
 	std::shared_ptr<Character> AssetManager::battler1;
 	std::shared_ptr<Character> AssetManager::battler2;

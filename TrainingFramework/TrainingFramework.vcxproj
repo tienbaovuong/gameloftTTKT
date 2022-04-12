@@ -344,7 +344,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Castle.cpp" />
-    <ClCompile Include="CharacterBase.cpp" />
     <ClCompile Include="Edge.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="SnowTree.cpp" />
@@ -352,6 +351,7 @@
     <ClCompile Include="src\GameManager\AssetManager.cpp" />
     <ClCompile Include="src\GameManager\ResourceManagers.cpp" />
     <ClCompile Include="src\GameObject\Character.cpp" />
+    <ClCompile Include="src\GameObject\CharacterBase.cpp" />
     <ClCompile Include="src\GameObject\Character\Ally.cpp" />
     <ClCompile Include="src\GameObject\Character\Dorcas.cpp" />
     <ClCompile Include="src\GameObject\Character\EnemyBandit.cpp" />
@@ -400,8 +400,8 @@
     <ClInclude Include="src\GameManager\Singleton.h" />
     <ClInclude Include="src\GameObject\BaseObject.h" />
     <ClInclude Include="src\GameObject\Character.h" />
+    <ClInclude Include="src\GameObject\CharacterBase.h" />
     <ClInclude Include="src\GameObject\Character\Ally.h" />
-    <ClInclude Include="src\GameObject\Character\CharacterBase.h" />
     <ClInclude Include="src\GameObject\Character\CharacterHeader.h" />
     <ClInclude Include="src\GameObject\Character\Dorcas.h" />
     <ClInclude Include="src\GameObject\Character\Enemy.h" />

@@ -17,7 +17,7 @@
 #include "MapTile/MapTileHeader.h"
 
 GSMap::GSMap()
-	: currentState(0), GameStateBase(StateType::STATE_MAP)
+	: currentState(0)
 {
 	m_mapMatrix = new std::shared_ptr<MapSquare>* [Globals::mapWidth];
 	for (int i = 0; i < Globals::mapWidth; i++) {
@@ -478,13 +478,17 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 				break;
 			case 3:
 				if (m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter() != nullptr) {
-					if (m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter()->isEnemy() && m_chosenCharacter->getMovementMap()[m_mapPointer->getPosX()][m_mapPointer->getPosY()].atkMark) {
-						m_chosenCharacter->setFinishTurn(true);
-						if (checkEndTurn()) {
-							currentState = 4;
-							enemyTurn();
+					if (m_chosenCharacter->getMovementMap()[m_mapPointer->getPosX()][m_mapPointer->getPosY()].atkMark) {
+						if(m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter()->isEnemy()) {
+							m_chosenCharacter->setFinishTurn(true);
+							if (checkEndTurn()) {
+								currentState = 4;
+								enemyTurn();
+							}
+							else currentState = 0;
+							Battle(m_chosenCharacter, m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter()
+								, m_mapMatrix[m_chosenCharacter->getPosX()][m_chosenCharacter->getPosY()], m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]);
 						}
-						else currentState = 0;
 					}
 				}
 				break;
@@ -664,6 +668,26 @@ void GSMap::Draw()
 		}
 	}
 	
+}
+
+
+
+bool GSMap::CheckHealer()
+{
+	return false;
+}
+
+void GSMap::Battle(std::shared_ptr<Character> battler1, std::shared_ptr<Character> battle2, std::shared_ptr<MapSquare> square1, std::shared_ptr<MapSquare> square2)
+{
+	AssetManager::GetInstance()->battler1 = battler1;
+	AssetManager::GetInstance()->battler2 = battle2;
+	AssetManager::GetInstance()->eva1 = square1->getEvasion();
+	AssetManager::GetInstance()->def1 = square1->getDefense();
+	AssetManager::GetInstance()->res1 = square1->getResistance();
+	AssetManager::GetInstance()->eva2 = square2->getEvasion();
+	AssetManager::GetInstance()->def2 = square2->getDefense();
+	AssetManager::GetInstance()->res2 = square2->getResistance();
+	GameStateMachine::GetInstance()->ChangeState(StateType::STATE_BATTLE);
 }
 
 void GSMap::GameOver()

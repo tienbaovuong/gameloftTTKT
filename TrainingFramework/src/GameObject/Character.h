@@ -1,5 +1,5 @@
 #pragma once
-#include "Sprite2D.h"
+#include "CharacterBase.h"
 #include "Item.h"
 #include <SpriteAnimation.h>
 #include <MapSquare.h>
@@ -28,10 +28,10 @@ public:
 };
 
 class Character :
-    public Sprite2D
+    public CharacterBase
 {
 public:
-    Character() : Sprite2D() , m_name("unknown"), m_level(1), m_healthPoint(1), m_strength(0), m_isEnemy(false)
+    Character() : CharacterBase() , m_name("unknown"), m_level(1), m_healthPoint(1), m_strength(0), m_isEnemy(false)
                   , m_magic(0), m_defense(0), m_resistance(0), m_movement(5), m_characterType("unknown"), m_power(0)
                   , m_hitRate(100), m_evasion(0), m_critRate(5), m_posX(0), m_posY(0), fieldAnimation(nullptr), m_isAlive(true), m_isFinishTurn(false)
                     , m_movementMap(nullptr), m_time(0), m_disableButton(false) {}
@@ -43,8 +43,9 @@ public:
     void Update(GLfloat deltatime) override;
     void move(GLint x, GLint y);
     void calculateStat();
-    //virtual bool isEquippable(std::shared_ptr<Item> equipment) = 0;
+    bool isEquippable(std::shared_ptr<Item> equipment) override;
     //virtual void interact(Character otherPerson, bool enemyDefeated) = 0;
+    std::shared_ptr<Sprite2D> getSecondFace();
     std::shared_ptr<SpriteAnimation> getFieldAnimation();
     void setFieldAnimation(std::shared_ptr<SpriteAnimation> animation);
     GLint getPosX();
@@ -56,6 +57,7 @@ public:
     std::string getCharName();
     void setCharName(std::string name);
     bool isEnemy();
+    bool isPhysical();
     bool getDisableButton();
     bool getAlive();
     void die();
@@ -116,6 +118,7 @@ protected:
     GLint m_posY;
 
     std::shared_ptr<SpriteAnimation> fieldAnimation;
+    std::shared_ptr<Sprite2D> secondFace;
     //std::shared_ptr<SpriteAnimation> battleAnimation;
     bool m_isAlive;
     bool m_isFinishTurn;

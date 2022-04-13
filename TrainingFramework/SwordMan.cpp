@@ -14,5 +14,5 @@ SwordMan::~SwordMan()
 bool SwordMan::isEquippable(std::shared_ptr<Item> equipment)
 {
 	if (equipment->getType() == "sword") return true;
-	else false;
+	else return false;
 }

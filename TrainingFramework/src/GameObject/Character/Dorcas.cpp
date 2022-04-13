@@ -6,15 +6,15 @@ Dorcas::Dorcas(GLint level, GLint exp)
 	this->SetTexture(AssetManager::GetInstance()->DorcasFace);
 	this->secondFace = std::make_shared<Sprite2D>(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->DorcasFace2);
 	this->m_name = "Dorcas";
-	this->m_maxHealthPoint = 1;
-	this->m_strength = 1;
-	this->m_defense = 1;
-	this->m_magic = 1;
-	this->m_resistance = 1;
+	this->m_maxHealthPoint = 19;
+	this->m_strength = 10;
+	this->m_defense = 6;
+	this->m_magic = 0;
+	this->m_resistance = 0;
 
-	this->m_hpGrwth = 1;
-	this->m_strGrwth = 1;
-	this->m_defGrwth = 1;
+	this->m_hpGrwth = 1.2;
+	this->m_strGrwth = 1.2;
+	this->m_defGrwth = 0.8;
 	this->m_magGrwth = 0;
 	this->m_resGrwth = 0;
 	calculateStat();

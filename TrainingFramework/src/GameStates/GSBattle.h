@@ -37,6 +37,7 @@ private:
 	std::shared_ptr<Sprite2D> box2;
 
 	std::list<std::shared_ptr<Text>> fixedText;
+	std::list<std::shared_ptr<Text>> fixedText2;
 	std::shared_ptr<Text> hp1;
 	std::shared_ptr<Text> hp2;
 	std::shared_ptr<Text> enterToBegin;

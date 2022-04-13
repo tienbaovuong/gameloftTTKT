@@ -34,6 +34,7 @@ public:
 	void	GameOver();
 	bool	checkEndTurn();
 	void	enemyTurn();
+	void	playerTurn();
 
 private:
 	std::shared_ptr<MapSquare>**	m_mapMatrix;
@@ -49,7 +50,7 @@ private:
 	std::shared_ptr <Sprite2D> m_moveMarker;
 	std::shared_ptr <Sprite2D> m_atkMarker;
 
- 	//0 = normal map state, 1 = character moving state, 2 = character pick action, 3 = choose target, 4 = enemy turn
+ 	//0 = normal map state, 1 = character moving state, 2 = character pick action, 3 = choose target, 4 = enemy turn annouce, 5 = enemy turn, 6 player turn annouce
 	GLint currentState = 0;
 	
 	//box
@@ -73,9 +74,13 @@ private:
 	std::shared_ptr<Text>		m_debug;
 	std::shared_ptr<Text>		m_numMovement;
 	std::shared_ptr<Text>		m_finishTurnMark;
+	std::shared_ptr<Text>		m_playerturnWord;
+	std::shared_ptr<Text>		m_enemyturnWord;
 	
 	//main character
 	std::shared_ptr<Character> m_mainCharacter;
+	GLint	prevX;
+	GLint	prevY;
 	GLfloat m_time;
 };
 

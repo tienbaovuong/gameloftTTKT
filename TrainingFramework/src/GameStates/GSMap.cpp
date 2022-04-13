@@ -303,11 +303,16 @@ void GSMap::Init()
 	m_waitWord = std::make_shared<Text>(shader, font, "Wait (S)", TextColor::WHITE, 2.0);
 	m_waitWord->Set2DPosition(Globals::screenWidth / 2 - 150, Globals::screenHeight * 0.625);
 
-	//attack option
+	//chess option
 	m_openChestWord = std::make_shared<Text>(shader, font, "Open chess (D)", TextColor::WHITE, 2.0);
 	m_openChestWord->Set2DPosition(Globals::screenWidth / 2 - 150, Globals::screenHeight * 0.875);
 
 	m_finishTurnMark = std::make_shared<Text>(shader, font, "Done", TextColor::RED, 1.0);
+	m_playerturnWord = std::make_shared<Text>(shader, font, "Player's Phase", TextColor::BLUE, 4.0);
+	m_playerturnWord->Set2DPosition(Globals::screenWidth / 2 - 250, Globals::screenHeight / 2);
+
+	m_enemyturnWord = std::make_shared<Text>(shader, font, "Enemy's Phase", TextColor::RED, 4.0);
+	m_enemyturnWord->Set2DPosition(Globals::screenWidth / 2 - 250, Globals::screenHeight / 2);
 }
 
 void GSMap::Exit()
@@ -467,9 +472,12 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 				if (m_chosenCharacter->getMovementMap()[xtemp][ytemp].mark) {
 					currentState = 2;
 					//currentState = 0;
+					prevX = m_chosenCharacter->getPosX(); prevY = m_chosenCharacter->getPosY();
 					m_mapMatrix[m_chosenCharacter->getPosX()][m_chosenCharacter->getPosY()]->setCharacter(nullptr);
 					m_mapMatrix[xtemp][ytemp]->setCharacter(m_chosenCharacter);
 					m_chosenCharacter->move(xtemp, ytemp);
+					CheckHealer();
+
 				}
 				else currentState = 0;
 				break;
@@ -479,40 +487,41 @@ void GSMap::HandleKeyEvents(int key, bool bIsPressed)
 			case 3:
 				if (m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter() != nullptr) {
 					if (m_chosenCharacter->getMovementMap()[m_mapPointer->getPosX()][m_mapPointer->getPosY()].atkMark) {
-						if(m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter()->isEnemy()) {
+						if((m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter()->isEnemy() && m_chosenCharacter->getEquipment()->getType() != "staff")
+							|| (!m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter()->isEnemy() && m_chosenCharacter->getEquipment()->getType() == "staff")) {
 							Battle(m_chosenCharacter, m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter()
 								, m_mapMatrix[m_chosenCharacter->getPosX()][m_chosenCharacter->getPosY()], m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]);
-							if (AssetManager::GetInstance()->escapeBattle) {
-								break;
-							}
-							m_chosenCharacter->setFinishTurn(true);
-							if (checkEndTurn()) {
-								currentState = 4;
-								enemyTurn();
-							}
-							else currentState = 0;
-						}
-						else {
-							if (m_chosenCharacter->getEquipment()->getType() == "staff") {
-								Battle(m_chosenCharacter, m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]->getCharacter()
-									, m_mapMatrix[m_chosenCharacter->getPosX()][m_chosenCharacter->getPosY()], m_mapMatrix[m_mapPointer->getPosX()][m_mapPointer->getPosY()]);
-								if (AssetManager::GetInstance()->escapeBattle) {
-									AssetManager::GetInstance()->escapeBattle = false;
-									break;
-								}
-								m_chosenCharacter->setFinishTurn(true);
-								if (checkEndTurn()) {
-									currentState = 4;
-									enemyTurn();
-								}
-								else currentState = 0;
-							}
+							//printf("%B", AssetManager::GetInstance()->escapeBattle)
+							
 						}
 					}
 				}
 				break;
+			case 5:
+				currentState = 6;
+				break;
+			default:
+				break;
 			}
-
+			break;
+		case KEY_BACK:
+			switch (currentState) {
+			case 1:
+				currentState = 0;
+				break;
+			case 2:
+				currentState = 0;
+				m_mapMatrix[m_chosenCharacter->getPosX()][m_chosenCharacter->getPosY()]->setCharacter(nullptr);
+				m_chosenCharacter->setPosXY(prevX, prevY);
+				m_mapMatrix[prevX][prevY]->setCharacter(m_chosenCharacter);
+				break;
+			case 3:
+				currentState = 2;
+				break;
+			default:
+				break;
+			}
+			break;
 			
 		default:
 			break;
@@ -547,6 +556,29 @@ void GSMap::HandleMouseMoveEvents(int x, int y)
 
 void GSMap::Update(float deltaTime)
 {
+	if (AssetManager::GetInstance()->battleEnd) {
+		printf("ok");
+		AssetManager::GetInstance()->battleEnd = false;
+		auto b1 = AssetManager::GetInstance()->battler1, b2 = AssetManager::GetInstance()->battler2;
+		if (!b1->getAlive()) {
+			if (b1->isEnemy()) {
+				m_listEnemy.remove(b1);
+			}
+			else m_listCharacter.remove(b1);
+		}
+		if (!b2->getAlive()) {
+			if (b2->isEnemy()) {
+				m_listEnemy.remove(b2);
+			}
+			else m_listCharacter.remove(b2);
+		}
+		m_chosenCharacter->setFinishTurn(true);
+		if (checkEndTurn()) {
+			currentState = 4;
+			enemyTurn();
+		}
+		else currentState = 0;
+	}
 	if (m_mainCharacter != nullptr) {
 		if (!m_mainCharacter->getAlive()) {
 			GameOver();
@@ -600,6 +632,21 @@ void GSMap::Update(float deltaTime)
 		xtemp = it->getPosX(); ytemp = it->getPosY();
 		it->getFieldAnimation()->Set2DPosition(m_mapMatrix[xtemp][ytemp]->GetPosition().x, m_mapMatrix[xtemp][ytemp]->GetPosition().y);
 		it->getFieldAnimation()->Update(deltaTime);
+	}
+
+	if (currentState == 4) {
+		m_time += deltaTime;
+		if (m_time > 0.8) {
+			currentState = 5;
+			m_time = 0;
+		}
+	}
+	if (currentState == 6) {
+		m_time += deltaTime;
+		if (m_time > 0.8) {
+			currentState = 0;
+			m_time = 0;
+		}
 	}
 }
 
@@ -675,6 +722,13 @@ void GSMap::Draw()
 			}
 		}
 	}
+	if (currentState == 4) {
+		m_enemyturnWord->Draw();
+	}
+	if (currentState == 6) {
+		m_playerturnWord->Draw();
+	}
+
 	for (auto it : m_listButton)
 	{
 		it->Draw();
@@ -693,7 +747,14 @@ void GSMap::Draw()
 
 bool GSMap::CheckHealer()
 {
-	return false;
+	if (m_chosenCharacter->getEquipment()->getType() == "staff") {
+		m_attackWord->SetText("Assist (W)");
+		return true;
+	}
+	else {
+		m_attackWord->SetText("Attack (W)");
+		return false;
+	}
 }
 
 void GSMap::Battle(std::shared_ptr<Character> battler1, std::shared_ptr<Character> battle2, std::shared_ptr<MapSquare> square1, std::shared_ptr<MapSquare> square2)
@@ -728,6 +789,9 @@ void GSMap::enemyTurn()
 	for (auto it : m_listCharacter) {
 		it->setFinishTurn(false);
 	}
-	currentState = 0;
+}
+
+void GSMap::playerTurn()
+{
 }
 

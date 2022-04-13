@@ -4,7 +4,7 @@
 Character::Character(GLint level, GLint exp)
     :CharacterBase(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->IkeField), m_name("unknown"), m_level(level),m_exp(exp), m_healthPoint(1), m_strength(0)
     , m_magic(0), m_defense(0), m_resistance(0), m_movement(5), m_minRange(1), m_maxRange(1), m_characterType("unknown"), m_power(0), bonusHitRate(0)
-    , m_hitRate(100), m_evasion(0), m_critRate(5), m_posX(0), m_posY(0), fieldAnimation(nullptr), m_isFinishTurn(false)
+    , m_hitRate(100), m_evasion(0), m_critRate(5), m_posX(0), m_posY(0), fieldAnimation(nullptr), m_isFinishTurn(false), m_isEnemy(false)
     , m_time(0), m_disableButton(false)
 {
     m_movementMap = new MoveList* [Globals::mapWidth];
@@ -151,7 +151,10 @@ bool Character::isEnemy()
 
 bool Character::isPhysical()
 {
-    return true;
+    if (this->m_characterType == "Priest") {
+        return false;
+    }
+    else return true;
 }
 
 bool Character::getDisableButton()
@@ -379,15 +382,26 @@ void Character::equip(std::shared_ptr<Item> equipment)
             this->m_equipment = equipment;
             this->m_hitRate = this->m_hitRate + equipment->getHitRate();
             this->m_critRate = this->m_critRate + equipment->getCritRate();
-            this->m_power = this->m_power + equipment->getPower();
+            if (isPhysical()) {
+                this->m_power = this->m_strength + equipment->getPower() - this->m_equipment->getPower();
+            }
+            else {
+                this->m_power = this->m_magic + equipment->getPower() - this->m_equipment->getPower();
+            }
+            this->m_minRange = equipment->getMinRange();
+            this->m_maxRange = equipment->getMaxRange();
         }
     }
     else {
         if (isEquippable(equipment)) {
             this->m_hitRate = this->m_hitRate + equipment->getHitRate() - this->m_equipment->getHitRate();
             this->m_critRate = this->m_critRate + equipment->getCritRate() - this->m_equipment->getCritRate();
-            this->m_power = this->m_power + equipment->getPower() - this->m_equipment->getPower();
+            if (isPhysical()) {
+                this->m_power = this->m_strength + equipment->getPower() - this->m_equipment->getPower();
+            }
             this->m_equipment = equipment;
+            this->m_minRange = equipment->getMinRange();
+            this->m_maxRange = equipment->getMaxRange();
         }
     }
 }

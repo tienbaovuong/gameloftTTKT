@@ -565,12 +565,14 @@ void GSMap::Update(float deltaTime)
 				m_listEnemy.remove(b1);
 			}
 			else m_listCharacter.remove(b1);
+			m_mapMatrix[b1->getPosX()][b1->getPosY()]->setCharacter(nullptr);
 		}
 		if (!b2->getAlive()) {
 			if (b2->isEnemy()) {
 				m_listEnemy.remove(b2);
 			}
 			else m_listCharacter.remove(b2);
+			m_mapMatrix[b2->getPosX()][b2->getPosY()]->setCharacter(nullptr);
 		}
 		m_chosenCharacter->setFinishTurn(true);
 		if (checkEndTurn()) {

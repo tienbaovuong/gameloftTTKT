@@ -3,3 +3,7 @@
 LevelBase::~LevelBase()
 {
 }
+
+void LevelBase::update()
+{
+}

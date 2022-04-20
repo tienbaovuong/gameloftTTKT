@@ -3,9 +3,9 @@
 
 Character::Character(GLint level, GLint exp)
     :CharacterBase(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->IkeField), m_name("unknown"), m_level(level),m_exp(exp), m_healthPoint(1), m_strength(0)
-    , m_magic(0), m_defense(0), m_resistance(0), m_movement(5), m_minRange(1), m_maxRange(1), m_characterType("unknown"), m_power(0), bonusHitRate(0)
-    , m_hitRate(100), m_evasion(0), m_critRate(5), m_posX(0), m_posY(0), fieldAnimation(nullptr), m_isFinishTurn(false), m_isEnemy(false)
-    , m_time(0), m_disableButton(false)
+    , m_magic(0), m_defense(0), m_resistance(0), m_movement(5), m_minRange(1), m_maxRange(1), m_characterType("unknown"), m_power(0), bonusHitRate(0), m_equipment(nullptr)
+    , m_hitRate(100), m_evasion(0), m_critRate(5), m_posX(0), m_posY(0), fieldAnimation(nullptr), m_isFinishTurn(false), m_isEnemy(false), m_isAlive(true)
+    , m_time(0), m_disableButton(false), target(nullptr)
 {
     m_movementMap = new MoveList* [Globals::mapWidth];
     for (int i = 0; i < Globals::mapWidth; i++) {
@@ -88,6 +88,20 @@ bool Character::isEquippable(std::shared_ptr<Item> equipment)
     return false;
 }
 
+void Character::gainExp(GLint exp)
+{
+    this->m_exp = m_exp + exp;
+    if (m_exp >= 100) {
+        m_exp -= 100;
+        this->m_maxHealthPoint = m_maxHealthPoint - (int)m_hpGrwth * m_level  + (int)m_hpGrwth * (m_level + 1);
+        this->m_strength = m_strength - (int)m_strGrwth * m_level + (int)m_strGrwth * (m_level + 1);
+        this->m_defense = m_defense - (int)m_defGrwth * m_level + (int)m_defGrwth * (m_level + 1);
+        this->m_magic = m_magic - (int)m_magGrwth * m_level + (int)m_magGrwth * (m_level + 1);
+        this->m_resistance = m_resistance - (int)m_resGrwth * m_level + (int)m_resGrwth * (m_level + 1);
+        m_level++;
+    }
+}
+
 std::shared_ptr<Sprite2D> Character::getSecondFace()
 {
     return this->secondFace;
@@ -137,6 +151,11 @@ GLint Character::getMove()
 std::string Character::getCharName()
 {
     return this->m_name;
+}
+
+std::string Character::getCharType()
+{
+    return this->m_characterType;
 }
 
 void Character::setCharName(std::string name)
@@ -237,6 +256,11 @@ void Character::calculateMovementMap(std::shared_ptr<MapSquare>** mapMatrix)
                 }
         }
     }
+}
+
+bool Character::AI(std::shared_ptr<MapSquare>** mapMatrix)
+{
+    return true;
 }
 
 void Character::calculateAttackMap(std::shared_ptr<MapSquare>** mapMatrix)
@@ -383,10 +407,10 @@ void Character::equip(std::shared_ptr<Item> equipment)
             this->m_hitRate = this->m_hitRate + equipment->getHitRate();
             this->m_critRate = this->m_critRate + equipment->getCritRate();
             if (isPhysical()) {
-                this->m_power = this->m_strength + equipment->getPower() - this->m_equipment->getPower();
+                this->m_power = this->m_strength + equipment->getPower();
             }
             else {
-                this->m_power = this->m_magic + equipment->getPower() - this->m_equipment->getPower();
+                this->m_power = this->m_magic + equipment->getPower();
             }
             this->m_minRange = equipment->getMinRange();
             this->m_maxRange = equipment->getMaxRange();
@@ -417,6 +441,7 @@ void Character::unequip(std::shared_ptr<Item> equipment)
 void Character::use(std::shared_ptr<Item> item, std::shared_ptr<Character> character)
 {
     item->effect(character);
+    item->reduceDurability(1);
 }
 
 GLint Character::inventorySpace()

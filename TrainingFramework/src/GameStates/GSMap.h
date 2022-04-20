@@ -1,6 +1,7 @@
 #pragma once
 #include "GameStateBase.h"
-
+#include "Level/LevelBase.h"
+#include <queue>
 class MapSquare;
 class MapPointer;
 class Character;
@@ -8,6 +9,7 @@ class Sprite2D;
 class Text;
 class GameButton;
 class SpriteAnimation;
+class LevelBase;
 
 class GSMap :
     public GameStateBase
@@ -31,6 +33,7 @@ public:
 	
 	bool	CheckHealer();
 	void	Battle(std::shared_ptr<Character> battler1, std::shared_ptr<Character> battle2, std::shared_ptr<MapSquare> square1, std::shared_ptr<MapSquare> square2);
+	void	LookInfo(std::shared_ptr<Character> choosen, bool readOnly);
 	void	GameOver();
 	bool	checkEndTurn();
 	void	enemyTurn();
@@ -45,6 +48,7 @@ private:
 	std::list<std::shared_ptr<SpriteAnimation>>	m_listAnimation;
 	std::list<std::shared_ptr<Character>> m_listCharacter;
 	std::list<std::shared_ptr<Character>> m_listEnemy;
+	std::queue<std::shared_ptr<Character>> m_queueEnemy;
 	std::shared_ptr<MapPointer> m_mapPointer;
 	std::shared_ptr<Character> m_chosenCharacter;
 	std::shared_ptr <Sprite2D> m_moveMarker;
@@ -76,11 +80,15 @@ private:
 	std::shared_ptr<Text>		m_finishTurnMark;
 	std::shared_ptr<Text>		m_playerturnWord;
 	std::shared_ptr<Text>		m_enemyturnWord;
+	std::shared_ptr<Text>		m_seeInfo;
 	
 	//main character
 	std::shared_ptr<Character> m_mainCharacter;
 	GLint	prevX;
 	GLint	prevY;
 	GLfloat m_time;
+
+	//level
+	std::shared_ptr<LevelBase> m_levelsetting;
 };
 

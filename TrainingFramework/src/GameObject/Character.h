@@ -44,7 +44,7 @@ public:
     void move(GLint x, GLint y);
     void calculateStat();
     bool isEquippable(std::shared_ptr<Item> equipment) override;
-    //virtual void interact(Character otherPerson, bool enemyDefeated) = 0;
+    void gainExp(GLint exp);
     std::shared_ptr<Sprite2D> getSecondFace();
     std::shared_ptr<SpriteAnimation> getFieldAnimation();
     void setFieldAnimation(std::shared_ptr<SpriteAnimation> animation);
@@ -55,6 +55,7 @@ public:
     void setFinishTurn(bool finish);
     GLint getMove();
     std::string getCharName();
+    std::string getCharType();
     void setCharName(std::string name);
     bool isEnemy();
     bool isPhysical();
@@ -63,6 +64,7 @@ public:
     void die();
     void resetMovementMap();
     void calculateMovementMap(std::shared_ptr<MapSquare>** mapMatrix);
+    bool AI(std::shared_ptr<MapSquare>** mapMatrix) override;
     void calculateAttackMap(std::shared_ptr<MapSquare>** mapMatrix);
     MoveList** getMovementMap();
 
@@ -89,6 +91,9 @@ public:
     void use(std::shared_ptr<Item> item, std::shared_ptr<Character> character);
     GLint inventorySpace();
     bool addItem(std::shared_ptr<Item> item);
+
+    std::shared_ptr<Character> target;
+    GLint targetPosX, targetPosY;
 
 protected:
     std::string m_name;

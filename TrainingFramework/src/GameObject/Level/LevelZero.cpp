@@ -44,3 +44,8 @@ LevelZero::LevelZero()
 LevelZero::~LevelZero()
 {
 }
+
+void LevelZero::update()
+{
+	
+}

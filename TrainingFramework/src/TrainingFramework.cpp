@@ -7,6 +7,7 @@ int Globals::screenWidth = 1050;
 int Globals::screenHeight = 770;
 int Globals::squareLength = 70;
 int Globals::gameLevel = 0;
+bool Globals::musicOn = true;
 
 //AssetManager assetManager = AssetManager();
 

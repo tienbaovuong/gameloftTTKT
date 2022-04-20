@@ -28,6 +28,7 @@ public:
 
 	void	Prediction();
 	bool	isAssisting();
+	void	giveExp();
 	std::shared_ptr<Character> battler1, battler2;
 	GLint eva1, def1, res1, eva2, def2, res2;
 
@@ -42,6 +43,7 @@ private:
 	std::shared_ptr<Text> hp2;
 	std::shared_ptr<Text> enterToBegin;
 	std::shared_ptr<Text> prediction;
+	std::shared_ptr<Text> expText;
 	std::shared_ptr<Text> lvl1, lvl2, exp1, exp2;
 
 	std::shared_ptr<Text> numbers;
@@ -53,11 +55,13 @@ private:
 	GLint dmg2;
 	GLint hit2;
 	GLint crit2;
+	float expGain;
 
 	//0 = prediction, 1 = battler1 act, 2 = battler2 act, 3 = gain exp, 4 = press enter to end state
 	GLint currentState;
 	GLfloat m_time;
 	bool isAssist;
+	bool cantFightBack;
 	std::shared_ptr<Text> assistText;
 
 	std::shared_ptr<SpriteAnimation> slashAni;

@@ -30,6 +30,7 @@ void GSMenu::Init()
 	button->SetSize(200, 100);
 	button->SetOnClick([]() {
 			//GameStateMachine::GetInstance()->ChangeState(StateType::STATE_PLAY);
+			Globals::gameLevel = 0;
 			GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MAP);
 		});
 	m_listButton.push_back(button);
@@ -73,8 +74,10 @@ void GSMenu::Init()
 	m_textGameName2->Set2DPosition( 50 , 470);
 
 	//game sound
-	std::string name = "Alarm01.wav";
-	ResourceManagers::GetInstance()->PlaySound(name);
+	std::string name = "menutheme.mp3";
+	if (Globals::musicOn) {
+		ResourceManagers::GetInstance()->PlaySound(name, true);
+	}
 }
 
 void GSMenu::Exit()
@@ -85,10 +88,16 @@ void GSMenu::Exit()
 
 void GSMenu::Pause()
 {
+	if (Globals::musicOn) {
+		ResourceManagers::GetInstance()->StopSound("menutheme.mp3");
+	}
 }
 
 void GSMenu::Resume()
 {
+	if (Globals::musicOn) {
+		ResourceManagers::GetInstance()->PlaySound("menutheme.mp3", true);
+	}
 }
 
 

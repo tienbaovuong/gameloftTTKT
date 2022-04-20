@@ -29,6 +29,7 @@ public:
 
 	//level
 	static int Globals::gameLevel;
+	static bool Globals::musicOn;
 
 	
 };
@@ -123,5 +124,5 @@ public:
 #define KEY_MOVE_RIGHT		'D'
 #define KEY_MOVE_FORWORD	'W'
 #define KEY_MOVE_BACKWORD	'S'
-
+#define KEY_INFO			'C'
 #endif

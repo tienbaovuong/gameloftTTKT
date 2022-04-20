@@ -45,6 +45,7 @@ AssetManager::AssetManager()
 
 	escapeBattle = false;
 	battleEnd = false;
+	itemEnd = false;
 }
 
 AssetManager::~AssetManager()

@@ -373,6 +373,7 @@
     <ClCompile Include="src\GameObject\Items\Staffs.cpp" />
     <ClCompile Include="src\GameObject\Items\Sword.cpp" />
     <ClCompile Include="src\GameObject\Level\LevelBase.cpp" />
+    <ClCompile Include="src\GameObject\Level\LevelBaseBase.cpp" />
     <ClCompile Include="src\GameObject\Level\LevelZero.cpp" />
     <ClCompile Include="src\GameObject\MapPointer.cpp" />
     <ClCompile Include="src\GameObject\MapSquare.cpp" />
@@ -394,6 +395,7 @@
     <ClCompile Include="src\GameStates\GameStateBase.cpp" />
     <ClCompile Include="src\GameStates\GameStateMachine.cpp" />
     <ClCompile Include="src\GameStates\GSBattle.cpp" />
+    <ClCompile Include="src\GameStates\GSInfo.cpp" />
     <ClCompile Include="src\GameStates\GSIntro.cpp" />
     <ClCompile Include="src\GameStates\GSMap.cpp" />
     <ClCompile Include="src\GameStates\GSMenu.cpp" />
@@ -435,6 +437,7 @@
     <ClInclude Include="src\GameObject\Items\Staffs.h" />
     <ClInclude Include="src\GameObject\Items\Sword.h" />
     <ClInclude Include="src\GameObject\Level\LevelBase.h" />
+    <ClInclude Include="src\GameObject\Level\LevelBaseBase.h" />
     <ClInclude Include="src\GameObject\Level\LevelHeader.h" />
     <ClInclude Include="src\GameObject\Level\LevelZero.h" />
     <ClInclude Include="src\GameObject\MapPointer.h" />
@@ -461,6 +464,7 @@
     <ClInclude Include="src\GameStates\GameStateBase.h" />
     <ClInclude Include="src\GameStates\GameStateMachine.h" />
     <ClInclude Include="src\GameStates\GSBattle.h" />
+    <ClInclude Include="src\GameStates\GSInfo.h" />
     <ClInclude Include="src\GameStates\GSIntro.h" />
     <ClInclude Include="src\GameStates\GSMap.h" />
     <ClInclude Include="src\GameStates\GSMenu.h" />

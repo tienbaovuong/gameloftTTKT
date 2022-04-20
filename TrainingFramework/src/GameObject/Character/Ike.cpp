@@ -7,7 +7,7 @@ Ike::Ike(GLint level, GLint exp)
 	this->secondFace = std::make_shared<Sprite2D>(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderTexture, AssetManager::GetInstance()->IkeFace2);
 	this->m_name = "Ike";
 	this->m_maxHealthPoint = 19;
-	this->m_strength = 11;
+	this->m_strength = 5;
 	this->m_defense = 5;
 	this->m_magic = 2;
 	this->m_resistance = 2;

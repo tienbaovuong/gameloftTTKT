@@ -4,13 +4,15 @@
 #include <Character.h>
 #include "Character/CharacterHeader.h"
 #include "Items/ItemHeader.h"
+#include "LevelBaseBase.h"
 //class Character;
 class Ally;
 class Enemy;
-class LevelBase
+class LevelBase: 
+	public LevelBaseBase
 {
 public:
-	LevelBase(){}
+	LevelBase(): LevelBaseBase() {}
 	~LevelBase();
 
 	std::list<std::shared_ptr<Enemy>> m_enemyList;
@@ -19,5 +21,6 @@ public:
 	int startYPointer;
 	int xOffset;
 	int yOffset;
+	void update() override;
 };
 

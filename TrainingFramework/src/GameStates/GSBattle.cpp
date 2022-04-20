@@ -17,6 +17,7 @@ void GSBattle::Init()
 	std::srand(std::time(0));
 	currentState = 0;
 	m_time = 0;
+	expGain = 0;
 	battler1 = AssetManager::GetInstance()->battler1;
 	battler2 = AssetManager::GetInstance()->battler2;
 	eva1 = AssetManager::GetInstance()->eva1;
@@ -26,6 +27,8 @@ void GSBattle::Init()
 	def2 = AssetManager::GetInstance()->def2;
 	res2 = AssetManager::GetInstance()->res2;
 	isAssist = isAssisting();
+	cantFightBack = (battler2->getEquipment()->getType() == "staff");
+
 	slashAni = std::make_shared<SpriteAnimation>(AssetManager::GetInstance()->model2D, AssetManager::GetInstance()->shaderAnimation, AssetManager::GetInstance()->slashAnimation, 5, 1, 0, 0.2);
 	slashAni->SetSize(2*Globals::screenHeight / 3, 2*Globals::screenHeight / 3);
 	slashAni->Set2DPosition(Globals::screenWidth - Globals::screenHeight / 6.0, Globals::screenHeight / 6.0);
@@ -68,17 +71,19 @@ void GSBattle::Init()
 	text->Set2DPosition(30, Globals::screenHeight / 3.0 + 300);
 	fixedText.push_back(text);
 
-	text = std::make_shared<Text>(textShader, font, "Damage: " + std::to_string(dmg2), TextColor::WHITE, 2.0);
-	text->Set2DPosition(Globals::screenWidth/2 + 30, Globals::screenHeight / 3.0 + 100);
-	fixedText.push_back(text);
+	if(!cantFightBack) {
+		text = std::make_shared<Text>(textShader, font, "Damage: " + std::to_string(dmg2), TextColor::WHITE, 2.0);
+		text->Set2DPosition(Globals::screenWidth / 2 + 30, Globals::screenHeight / 3.0 + 100);
+		fixedText.push_back(text);
 
-	text = std::make_shared<Text>(textShader, font, "Hit:    " + std::to_string(hit2), TextColor::WHITE, 2.0);
-	text->Set2DPosition(Globals::screenWidth / 2 + 30, Globals::screenHeight / 3.0 + 200);
-	fixedText.push_back(text);
+		text = std::make_shared<Text>(textShader, font, "Hit:    " + std::to_string(hit2), TextColor::WHITE, 2.0);
+		text->Set2DPosition(Globals::screenWidth / 2 + 30, Globals::screenHeight / 3.0 + 200);
+		fixedText.push_back(text);
 
-	text = std::make_shared<Text>(textShader, font, "Crit:   " + std::to_string(crit2), TextColor::WHITE, 2.0);
-	text->Set2DPosition(Globals::screenWidth / 2 + 30, Globals::screenHeight / 3.0 + 300);
-	fixedText.push_back(text);
+		text = std::make_shared<Text>(textShader, font, "Crit:   " + std::to_string(crit2), TextColor::WHITE, 2.0);
+		text->Set2DPosition(Globals::screenWidth / 2 + 30, Globals::screenHeight / 3.0 + 300);
+		fixedText.push_back(text);
+	}
 	
 	lvl1 = std::make_shared<Text>(textShader, font, "", TextColor::WHITE, 2.0);
 	lvl1->Set2DPosition(30, Globals::screenHeight / 3.0 + 450);
@@ -131,6 +136,9 @@ void GSBattle::Init()
 
 	hitStatus = std::make_shared<Text>(textShader, font, "", TextColor::RED, 2.0);
 	hitStatus->Set2DPosition(Globals::screenWidth - Globals::screenHeight / 6.0 - 50, Globals::screenHeight / 6.0 + 50);
+
+	expText = std::make_shared<Text>(textShader, font, "", TextColor::WHITE, 2.0);
+	expText->Set2DPosition(Globals::screenWidth / 2 - 100, Globals::screenHeight / 6.0);
 }
 
 void GSBattle::Exit()
@@ -161,6 +169,7 @@ void GSBattle::HandleKeyEvents(int key, bool bIsPressed)
 					if (hit1 < random) {
 						numbers->SetText("");
 						hitStatus->SetText("Miss");
+						if (!battler1->isEnemy()) expGain = 0;
 					}
 					else {
 						random = rand() % 100 + 1;
@@ -174,11 +183,19 @@ void GSBattle::HandleKeyEvents(int key, bool bIsPressed)
 							numbers->SetText(std::to_string(dmg1));
 							battler2->setHealthPoint(battler2->getHealthPoint() - dmg1);
 						}
+						if (!battler1->isEnemy()) expGain = 1;
 					}
 				}
 				else {
 					currentState = 1;
+					if (!battler1->isEnemy()) expGain = 1.5;
 					battler1->getEquipment()->effect(battler2);
+				}
+				auto temp = battler1->getEquipment();
+				temp->reduceDurability(1);
+				if (temp->getDurability() == 0) {
+					battler1->unequip(temp);
+					battler1->m_itemList.remove(temp);
 				}
 			}
 			else if (currentState == 4) {
@@ -187,7 +204,7 @@ void GSBattle::HandleKeyEvents(int key, bool bIsPressed)
 			}
 			break;
 		case KEY_BACK:
-			if (currentState == 0) {
+			if (currentState == 0 && !battler1->isEnemy()) {
 				//AssetManager::GetInstance()->escapeBattle = true;
 				GameStateMachine::GetInstance()->PopState();
 			}
@@ -210,7 +227,9 @@ void GSBattle::Update(float deltaTime)
 	hp1->SetText(std::to_string(battler1->getHealthPoint()));
 	hp2->SetText(std::to_string(battler2->getHealthPoint()));
 	lvl1->SetText("Lvl: "+std::to_string(battler1->getLevel()));
-	exp1->SetText("Exp: "+std::to_string(battler2->getExp()));
+	exp1->SetText("Exp: "+std::to_string(battler1->getExp()));
+	lvl2->SetText("Lvl: " + std::to_string(battler2->getLevel()));
+	exp2->SetText("Exp: " + std::to_string(battler2->getExp()));
 
 	switch (currentState) {
 	case 1:
@@ -220,7 +239,10 @@ void GSBattle::Update(float deltaTime)
 
 		if (m_time > 1.0) {
 			m_time = 0;
-			if (!battler2->getAlive() || isAssist) currentState = 3;
+			if (!battler2->getAlive() || isAssist || cantFightBack) {
+				currentState = 3;
+				giveExp();
+			}
 			else {
 				currentState = 2;
 				slashAni->Set2DPosition(Globals::screenHeight / 6.0, Globals::screenHeight / 6.0);
@@ -230,6 +252,7 @@ void GSBattle::Update(float deltaTime)
 				if (hit2 < random) {
 					numbers->SetText("");
 					hitStatus->SetText("Miss");
+					if (!battler2->isEnemy()) expGain = 0;
 				}
 				else {
 					random = rand() % 100 + 1;
@@ -244,6 +267,13 @@ void GSBattle::Update(float deltaTime)
 						numbers->SetText(std::to_string(dmg2));
 						battler1->setHealthPoint(battler1->getHealthPoint() - dmg2);
 					}
+					if (!battler2->isEnemy()) expGain = 1;
+				}
+				auto temp = battler2->getEquipment();
+				temp->reduceDurability(1);
+				if (temp->getDurability() == 0) {
+					battler2->unequip(temp);
+					battler2->m_itemList.remove(temp);
 				}
 			}
 		}
@@ -255,12 +285,13 @@ void GSBattle::Update(float deltaTime)
 		if (m_time > 1.0) {
 			m_time = 0;
 			currentState = 3;
+			giveExp();
 		}
 		break;
 
 	case 3:
 		m_time += deltaTime;
-		if (m_time > 0.5) {
+		if (m_time > 0.6) {
 			m_time = 0;
 			currentState = 4;
 		}
@@ -304,6 +335,9 @@ void GSBattle::Draw()
 			hitStatus->Draw();
 		}
 	}
+	else if (currentState == 3) {
+		expText->Draw();
+	}
 }
 
 void GSBattle::Prediction()
@@ -339,4 +373,44 @@ bool GSBattle::isAssisting()
 		return true;
 	}
 	else return false;
+}
+
+void GSBattle::giveExp()
+{
+	int base;
+	int result;
+	if (!battler1->isEnemy()) {
+		int lvlRange = battler2->getLevel() - battler1->getLevel();
+		if (lvlRange <= -2) base = 10 + (lvlRange + 2) * 3;
+		else if (lvlRange <= 1) base = 10;
+		else base = 10 + (lvlRange - 1) * 3;
+
+		if (base <= 1) base = 1;
+		if (base >= 30) base = 30;
+		if (!battler2->getAlive()) expGain = 3;
+		result = expGain * base;
+		if (result == 0) result = 1;
+		if (!battler1->getAlive()) result = 0;
+		battler1->gainExp(result);
+	}
+	else {
+		int lvlRange = battler1->getLevel() - battler2->getLevel();
+		if (lvlRange <= -2) base = 10 + (lvlRange + 2) * 3;
+		else if (lvlRange <= 1) base = 10;
+		else base = 10 + (lvlRange - 1) * 3;
+
+		if (base <= 1) base = 1;
+		if (base >= 30) base = 30;
+		if (!battler1->getAlive()) expGain = 3;
+		result = expGain * base;
+		if (result == 0) result = 1;
+		if (!battler2->getAlive()) result = 0;
+		battler2->gainExp(result);
+	}
+	if (result != 0) {
+		expText->SetText("+ " + std::to_string(result) + "exp");
+	}
+	else {
+		expText->SetText("No exp");
+	}
 }

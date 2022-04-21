@@ -13,7 +13,9 @@ enum class StateType
 	STATE_PLAY,
 	STATE_MAP,
 	STATE_BATTLE,
-	STATE_INFO
+	STATE_INFO,
+	STATE_SETTING,
+	STATE_WIN
 };
 
 class GameStateMachine : public CSingleton<GameStateMachine>
@@ -54,5 +56,6 @@ private:
 	std::shared_ptr<GameStateBase>				m_pNextState;
 	bool	m_running;
 	bool	m_fullscreen;
+
 };
 

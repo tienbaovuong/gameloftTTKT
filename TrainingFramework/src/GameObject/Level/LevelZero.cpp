@@ -1,5 +1,5 @@
 #include "Level/LevelZero.h"
-
+#include "GameStates/GameStateMachine.h"
 
 LevelZero::LevelZero()
 	:LevelBase()
@@ -47,5 +47,14 @@ LevelZero::~LevelZero()
 
 void LevelZero::update()
 {
-	
+	if (!banditLeader->getAlive()) {
+		Globals::gameLevel = 1;
+		GameStateMachine::GetInstance()->PopState();
+		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_WIN);
+	}
+	if (!ike->getAlive()) {
+		Globals::gameLevel = -1;
+		GameStateMachine::GetInstance()->PopState();
+		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_WIN);
+	}
 }

@@ -1,62 +1,8 @@
-﻿  GSMap.cpp
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(198,50): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(199,76): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(202,49): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(203,76): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(206,49): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(207,76): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(210,54): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(211,81): warning C4244: 'argument': conversion from 'double' to 'GLint', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(278,81): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(278,52): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(282,65): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(285,68): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(288,62): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(291,62): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(302,84): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(302,55): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(306,82): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(306,53): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(310,82): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(310,53): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(314,87): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(314,58): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(318,88): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(318,59): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(321,87): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(321,58): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(635,114): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(635,70): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(692,22): warning C4305: '=': truncation from 'double' to 'GLfloat'
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(736,102): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(736,66): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(747,101): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(747,65): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\include\xutility(158,77): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
-          with
-          [
-              _Ty=double
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\include\memory(2029): message : see reference to function template instantiation 'void std::_Construct_in_place<_Ty,std::shared_ptr<Shader>&,std::shared_ptr<Font>&,const char(&)[1],TextColor,double>(_Ty &,std::shared_ptr<Shader> &,std::shared_ptr<Font> &,const char (&)[1],TextColor &&,double &&) noexcept(false)' being compiled
-          with
-          [
-              _Ty=Text
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\include\memory(2748): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<std::shared_ptr<Shader>&,std::shared_ptr<Font>&,const char(&)[1],TextColor,double>(std::shared_ptr<Shader> &,std::shared_ptr<Font> &,const char (&)[1],TextColor &&,double &&)' being compiled
-          with
-          [
-              _Ty=Text
-          ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\include\memory(2748): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<std::shared_ptr<Shader>&,std::shared_ptr<Font>&,const char(&)[1],TextColor,double>(std::shared_ptr<Shader> &,std::shared_ptr<Font> &,const char (&)[1],TextColor &&,double &&)' being compiled
-          with
-          [
-              _Ty=Text
-          ]
-D:\Work related\Github\GLTTKT\TrainingFramework\src\GameStates\GSMap.cpp(274): message : see reference to function template instantiation 'std::shared_ptr<Text> std::make_shared<Text,std::shared_ptr<Shader>&,std::shared_ptr<Font>&,const char(&)[1],TextColor,double>(std::shared_ptr<Shader> &,std::shared_ptr<Font> &,const char (&)[1],TextColor &&,double &&)' being compiled
+﻿  LevelZero.cpp
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  1 of 3215 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  1 of 3322 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    8 functions had inline decision re-evaluated but remain unchanged
+    9 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   TrainingFramework.vcxproj -> D:\Work related\Github\GLTTKT\BIN-Nvidia\TrainingFramework.exe

@@ -5,6 +5,8 @@ Button asset: https://pngtree.com/freepng/set-of-sci-fi-blue-game-buttons-and-ui
 background: 
 	menu: https://unsplash.com/s/photos/ice-mountain
 	play: https://feuniverse.us/t/fe12-backgrounds-for-gba/4759
+	https://mario.fandom.com/wiki/Game_Over
+	https://static.wikia.nocookie.net/fortnite/images/0/03/To_Be_Continued..._-_Event_Screen_-_Fortnite.png/revision/latest/scale-to-width-down/1200?cb=20210510183210
 tileset:
 	https://www.reddit.com/r/srpgstudio/comments/96twyk/fire_emblem_gba_tile_sets_converted_by_blueleafy/
 	https://pngtree.com/freepng/square-frame-light-effect_6706952.html
